@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+}
+
+*{
+  font-family: 'Rubik', sans-serif;
+}
+
+::-webkit-scrollbar-track-piece  {
+  background-color: #00000033;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background-color: #33333333;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #4b6584;
+}
+
+/*
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+  display: none;
+}
+
+*/
