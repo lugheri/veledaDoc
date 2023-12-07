@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { Button } from "../../../../components/Button"
 import { TitlePage } from "../../../../components/TitlePage"
+import { Contracts } from "./components/Contracts"
 
 
 export const Advanced = () => {
   const [ page, setPage ] = useState<'accounts'|'contracts'>('accounts')
   return(
-    <div className="">
+    <div className="flex flex-col py-2">
       <TitlePage icon="faTools" title="Configurações Avançadas" 
       description="Gerencie todas as informações e contas do sistema"/>
         <div className="flex bg-white rounded-md shadow mt-1 p-1">
@@ -25,6 +26,8 @@ export const Advanced = () => {
           icon="faFileSignature" 
           onClick={()=>setPage('contracts')} />
       </div>
+      { page == 'accounts' ? <p>Accounts</p> : <Contracts/>}
+      
     </div>
      
   )
