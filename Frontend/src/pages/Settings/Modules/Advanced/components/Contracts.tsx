@@ -6,6 +6,7 @@ import { NewContract } from './NewContract';
 import { IContract } from '../Dto/contracts.dto';
 import api from '../../../../../services/api';
 import { Loading } from '../../../../../components/Loading';
+import { useNavigate } from 'react-router-dom';
 
 export const Contracts = () => {
   const [ newContract, setNewContract] = useState(false)  
@@ -60,7 +61,7 @@ const PageContracts : React.FC<IPageContractsComponent> = (props) => {
               <FontAwesomeIcon className="text-slate-50/80 my-4 text-6xl" icon={Fas.faPlus}/>
               <p className="text-slate-50 text-sm">Adicionar Contrato</p>      
             </div>    
-            {contracts.map((contract,key)=><ContractItem key={key} contract={contract}/>)}
+            {contracts.map((contract,key)=><ContractItem key={key} contract={contract} />)}
           </>
       }
     </>
@@ -72,11 +73,17 @@ type IContractItemComponent = {
   contract:IContract
 }
 const ContractItem : React.FC<IContractItemComponent> = (props) => {
+  const navigate = useNavigate();
+  const openContract = () => {
+    const route = `/settings/advanced/openContract/${props.contract.id}`
+    navigate(route)
+  }
   return(
     <div className="flex py-4 flex-col justify-between items-center w-[15.5%] h-[200px] my-1 mx-[.5%] bg-slate-300/60 hover:bg-slate-300/70 border border-slate-400 rounded shadow-neutral-500/30 shadow-md">
       <FontAwesomeIcon className="text-slate-500/50 mt-4 text-6xl" icon={Fas.faFileSignature}/>
       <p className="text-slate-800 text-sm">{ props.contract.name}</p>
-      <Button btn="info" name="Configurar" icon="faCogs" size="sm"/> 
+      <Button 
+        btn="info" name="Configurar" icon="faCogs" size="sm" onClick={()=>openContract()}/> 
     </div>    
   )
 }

@@ -21,6 +21,7 @@ import { Credentials } from "../pages/Settings/Modules/Credentials";
 import { Teams } from "../pages/Settings/Modules/Teams";
 import { Professionals } from "../pages/Treatment/modules/Professionals";
 import { Procedures } from "../pages/Treatment/modules/Procedures";
+import { OpenContract } from "../pages/Settings/Modules/Advanced/components/OpenContract";
 
 
 //Validate Auths
@@ -97,7 +98,8 @@ const RoutesApp = () => {
                 { path: '/settings/teams', element:<Teams/>},
                 { path: '/settings/credentials', element:<Credentials/>},
                 { path: '/settings/levels', element:<Levels/>},
-                { path: '/settings/advanced', element:<Advanced/>}
+                { path: '/settings/advanced', element:<Advanced/>},
+                { path: '/settings/advanced/openContract/:contract_id', element:<OpenContract/>}
               ]
             },
           ]
