@@ -81,7 +81,7 @@ const ContractItem : React.FC<IContractItemComponent> = (props) => {
   return(
     <div className="flex py-4 flex-col justify-between items-center w-[15.5%] h-[200px] my-1 mx-[.5%] bg-slate-300/60 hover:bg-slate-300/70 border border-slate-400 rounded shadow-neutral-500/30 shadow-md">
       <FontAwesomeIcon className="text-slate-500/50 mt-4 text-6xl" icon={Fas.faFileSignature}/>
-      <p className="text-slate-800 text-sm">{ props.contract.name}</p>
+      <p className="text-slate-800 text-xs font-semibold text-center">{ props.contract.name}</p>
       <Button 
         btn="info" name="Configurar" icon="faCogs" size="sm" onClick={()=>openContract()}/> 
     </div>    

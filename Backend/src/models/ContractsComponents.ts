@@ -1,38 +1,37 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface ContractsClausulesInstance extends Model{
+export interface ContractsComponentsInstance extends Model{
   id:number;
-  date:string;
-  session_id:number;
+  contract_id:number;
   title:string;
-  text:string;
-  description:string;
+  type:string;
+  content:string;
+  image:number;
   order:number;
   status:number;
 }
 
-export const ContractsClausules = sequelize.define<ContractsClausulesInstance>('ContractsClausules',{
+export const ContractsComponents = sequelize.define<ContractsComponentsInstance>('ContractsComponents',{
   id:{
     primaryKey:true,
     autoIncrement:true,
     type:DataTypes.INTEGER
   },
-  date:{
-    type:DataTypes.DATE,
-    defaultValue:DataTypes.NOW
-  }, 
-  session_id:{
+  contract_id:{
     type:DataTypes.INTEGER
   },
   title:{
     type:DataTypes.STRING
   },
-  text:{
+  type:{
     type:DataTypes.STRING
   },
-  description:{
+  content:{
     type:DataTypes.STRING
+  },
+  image:{
+    type:DataTypes.INTEGER
   },
   order:{
     type:DataTypes.INTEGER
@@ -42,6 +41,6 @@ export const ContractsClausules = sequelize.define<ContractsClausulesInstance>('
     defaultValue:1
   }
 },{
-  tableName: 'contracts_clausules',
+  tableName: 'contracts_components',
   timestamps:false
 })
