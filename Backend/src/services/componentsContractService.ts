@@ -9,7 +9,7 @@ class ComponentContractsService{
 
   async listComponents(contract_id:number):Promise<ContractsComponentsInstance[]>{
     const listComponents = await ContractsComponents.findAll({
-      where:{contract_id:contract_id},
+      where:{contract_id:contract_id,status:1},
       order:[['id','ASC']]
     })
     return listComponents

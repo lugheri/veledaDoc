@@ -28,7 +28,6 @@ type IPageContractsComponent = {
 const PageContracts : React.FC<IPageContractsComponent> = (props) => {
   const [ contracts, setContracts ] = useState<null|IContract[]>(null)
   const [ error, setError ] = useState("")
-  //Get List of Contracts
   const getContracts = async () => {
     try{
       const list = await api.get(`listContracts/${props.page}/${props.status}`)
