@@ -2,10 +2,10 @@ import { useState,FormEvent } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as Fas from "@fortawesome/free-solid-svg-icons";
 
-import { Modal, TitleModal } from "../../../../../components/Modal"
-import { Button } from '../../../../../components/Button';
-import { InputForm, TextAreaForm } from '../../../../../components/Inputs';
-import api from '../../../../../services/api';
+import { Modal, TitleModal } from "../../../../../../components/Modal"
+import { Button } from '../../../../../../components/Button';
+import { InputForm, TextAreaForm } from '../../../../../../components/Inputs';
+import api from '../../../../../../services/api';
 
 type INewContractComponent = {
   close:React.Dispatch<React.SetStateAction<boolean>>

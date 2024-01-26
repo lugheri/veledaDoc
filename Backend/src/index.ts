@@ -36,7 +36,7 @@ app.use(errorHandler)
 
 const httpServer = http.createServer(app);
 const startUp = async() => {  
-  httpServer.listen(4000,()=>console.log('😀 Backend CRM v4 - online!'));
+  httpServer.listen(4000,()=>console.log('😀 Your Backend is running on 4000!'));
 }
 startUp()
 

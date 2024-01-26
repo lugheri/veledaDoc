@@ -1,12 +1,18 @@
 import {useState,useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as Fas from "@fortawesome/free-solid-svg-icons";
-import { Button } from "../../../../../components/Button";
+
+import { IContract } from '../../Dto/contracts.dto';
+
+import api from '../../../../../../services/api';
+
+import { Loading } from '../../../../../../components/Loading';
+import { Button } from '../../../../../../components/Button';
 import { NewContract } from './NewContract';
-import { IContract } from '../Dto/contracts.dto';
-import api from '../../../../../services/api';
-import { Loading } from '../../../../../components/Loading';
-import { useNavigate } from 'react-router-dom';
+
+
 
 export const Contracts = () => {
   const [ newContract, setNewContract] = useState(false)  

@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IComponentsContract, IContract } from "../Dto/contracts.dto";
-import api from "../../../../../services/api";
-import { TitlePage } from "../../../../../components/TitlePage";
-import { Loading } from "../../../../../components/Loading";
-import { Button } from "../../../../../components/Button";
+import { IComponentsContract, IContract } from "../../Dto/contracts.dto";
+import api from "../../../../../../services/api";
+import { TitlePage } from "../../../../../../components/TitlePage";
+import { Loading } from "../../../../../../components/Loading";
+import { Button } from "../../../../../../components/Button";
 import generatePDF, { Margin, Resolution } from 'react-to-pdf';
-import { Modal, TitleModal } from "../../../../../components/Modal";
-import { InputForm, TextAreaForm } from "../../../../../components/Inputs";
+import { Modal, TitleModal } from "../../../../../../components/Modal";
+import { InputForm, TextAreaForm } from "../../../../../../components/Inputs";
 import SignaturePad from "react-signature-canvas";
 import ReactSignatureCanvas from "react-signature-canvas";
 

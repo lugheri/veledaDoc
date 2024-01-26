@@ -10,8 +10,11 @@ import { Template } from "../components/Template";
 
 //Módules
 import { Home } from "../pages/Home";
+import { Schedule } from "../pages/Schedule";
 //PRODUCTS
 import { Treatment } from "../pages/Treatment";
+import { Patients } from "../pages/Patients";
+import { Combo } from "../pages/Treatment/modules/Combo";
 //SETTINGS
 import { Settings } from "../pages/Settings";
 import { Users } from "../pages/Settings/Modules/Users";
@@ -21,7 +24,7 @@ import { Credentials } from "../pages/Settings/Modules/Credentials";
 import { Teams } from "../pages/Settings/Modules/Teams";
 import { Professionals } from "../pages/Treatment/modules/Professionals";
 import { Procedures } from "../pages/Treatment/modules/Procedures";
-import { OpenContract } from "../pages/Settings/Modules/Advanced/components/OpenContract";
+import { OpenContract } from "../pages/Settings/Modules/Advanced/components/Contracts/OpenContract";
 
 
 //Validate Auths
@@ -47,25 +50,15 @@ const RoutesApp = () => {
           children:[
             { index: true, element: <Home/>},
             {
-              path:'/dashboard',
+              path:'/schedule',
               children:[
-                { index: true, element:<Home/>},
-                { path: '/dashboard/a', element:<Home/>},
-                { path: '/dashboard/b', element:<Home/>},
+                { index: true, element:<Schedule/>}
               ]
-            },
-             {
-              path:'/customerService',
-              children:[
-                { index: true, element:<Home/>},
-                { path: '/customerService/serviceHistory', element:<Home/>},
-              ]
-            },
+            },            
             {
               path:'/patient',
               children:[
-                { index: true, element:<Home/>},
-                { path: '/patient/history', element:<Home/>},
+                { index: true, element:<Patients/>}
               ]
             },
             {
@@ -74,6 +67,8 @@ const RoutesApp = () => {
                 { index: true, element:<Treatment/>},
                 { path: '/treatment/procedures', element:<Procedures/>},
                 { path: '/treatment/professionals', element:<Professionals/>},
+                { path: '/treatment/combo', element:<Combo/>},
+                
               ]
             },
             {
