@@ -9,7 +9,8 @@ export const InputForm: React.FC<InputType> = (props) => {
     <div className="flex flex-col flex-1">
       {!props.label ? false 
       : (<label className="font-semibold italic text-sm text-slate-500 dark:text-slate-300">
-          {props.label}
+          {props.label} 
+          {props.required && (<span className="text-red-500" title="Campo Obrigatório">*</span>)}
         </label>)}
       <input 
         type={props.inputType ? props.inputType : "text"} 
@@ -32,6 +33,7 @@ export const InputNumberForm: React.FC<InputNumberType> = (props) => {
       {!props.label ? false 
       : (<label className="font-semibold italic text-sm text-slate-500 dark:text-slate-300">
           {props.label}
+          {props.required && (<span className="text-red-500" title="Campo Obrigatório">*</span>)}
         </label>)}
       <input 
         type="number" 
@@ -56,6 +58,7 @@ export const TextAreaForm: React.FC<TextAreaType> = (props) => {
       {!props.label ? false 
       : (<label className="font-semibold italic text-sm text-slate-500 dark:text-slate-300">
          {props.label}
+         {props.required && (<span className="text-red-500" title="Campo Obrigatório">*</span>)}
         </label>)}
       <textarea 
         className={`shadow border border-slate-300 mb-4 rounded text-slate-700 p-2 placeholder:italic placeholder:text-slate-400
@@ -77,6 +80,7 @@ export const SelectForm: React.FC<SelectType> = (props) => {
       {!props.label ? false 
       : (<label className="font-semibold italic text-sm text-slate-500 dark:text-slate-300">
           {props.label}
+          {props.required && (<span className="text-red-500" title="Campo Obrigatório">*</span>)}
         </label>)}  
       <select 
         className={`shadow border border-slate-300 rounded text-slate-700 p-2 placeholder:italic placeholder:text-slate-400

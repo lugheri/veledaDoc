@@ -18,6 +18,4 @@ export const SubTitle : React.FC<SubTitleType> = (props) => {
       </p>
     </div>
   )
-
-
 }
