@@ -12,7 +12,7 @@ export const TextError : React.FC<TextErrorProps> = (props) => {
     <p 
       className="text-white bg-red-500 p-2 rounded shadow text-center my-4">
       { props.icon && (
-        <FontAwesomeIcon icon={Fas[props.icon] as IconProp} className="opacity-70" beat/>
+        <FontAwesomeIcon icon={Fas[props.icon] as IconProp} className="opacity-70 mr-2" beat/> 
       )} 
       { props.error ? props.error : false }        
     </p>

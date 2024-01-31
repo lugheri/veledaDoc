@@ -1,15 +1,15 @@
 import { Router } from "express";
-import AdvancedSettings from "../controllers/AdvancedSettings";
+import AdvancedController from "../controllers/AdvancedController";
 
 export default(routes:Router) => {
   //Accounts
 
   //AvailableTreatments
-  routes.post('/newAvailableTreatment',AdvancedSettings.newAvailableTreatment)
-  routes.get('/listAvailableTreatments/:status',AdvancedSettings.listAvailableTreatments)
-  routes.get('/infoAvailableTreatment/:treatmentId',AdvancedSettings.infoAvailableTreatment)
-  routes.put('/editAvailableTreatment/:treatmentId',AdvancedSettings.editAvailableTreatment)
-  routes.delete('/deleteAvailableTreatment/:treatmentId',AdvancedSettings.deleteAvailableTreatment)
+  routes.post('/newAvailableTreatment',AdvancedController.newAvailableTreatment)
+  routes.get('/listAvailableTreatments/:status',AdvancedController.listAvailableTreatments)
+  routes.get('/infoAvailableTreatment/:treatmentId',AdvancedController.infoAvailableTreatment)
+  routes.put('/editAvailableTreatment/:treatmentId',AdvancedController.editAvailableTreatment)
+  routes.delete('/deleteAvailableTreatment/:treatmentId',AdvancedController.deleteAvailableTreatment)
 
   //Contracts
 }

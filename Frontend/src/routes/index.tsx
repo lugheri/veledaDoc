@@ -11,10 +11,15 @@ import { Template } from "../components/Template";
 //Módules
 import { Home } from "../pages/Home";
 import { Schedule } from "../pages/Schedule";
-//PRODUCTS
-import { Treatment } from "../pages/Treatment";
+//PATIENTS
 import { Patients } from "../pages/Patients";
-import { Combo } from "../pages/Treatment/modules/Combo";
+//TREATMENTS
+import { Treatment } from "../pages/Treatment";
+import { Procedures } from "../pages/Treatment/Procedures";
+import { Professionals } from "../pages/Treatment/Professionals";
+import { Combo } from "../pages/Treatment/Combo";
+//METRICS
+//COURSES
 //SETTINGS
 import { Settings } from "../pages/Settings";
 import { Users } from "../pages/Settings/Modules/Users";
@@ -22,8 +27,6 @@ import { Advanced } from "../pages/Settings/Modules/Advanced";
 import { Levels } from "../pages/Settings/Modules/Levels";
 import { Credentials } from "../pages/Settings/Modules/Credentials";
 import { Teams } from "../pages/Settings/Modules/Teams";
-import { Professionals } from "../pages/Treatment/modules/Professionals";
-import { Procedures } from "../pages/Treatment/modules/Procedures";
 import { OpenContract } from "../pages/Settings/Modules/Advanced/components/Contracts/OpenContract";
 
 

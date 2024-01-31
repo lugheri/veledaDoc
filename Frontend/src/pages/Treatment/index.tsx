@@ -9,11 +9,7 @@ export const Treatment = () => {
       title="Tratamentos"
       description="Cadastre os tratamentos disponíveis com seus procedimentos" 
       rightComponent={<Button icon="faPlus" btn="info" name="Novo Tratamento"/>}/>
-   
+    
   </div>
- 
-  
-  
-  
   )
 }

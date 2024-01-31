@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import availableTreatmentsService from "../services/availableTreatmentsService";
 import { AvailableTreatmentsDTO } from "./Dtos/availableTreatment.dto";
 
-class AdvancedSettings{
+class AdvancedController{
  //Accounts
 
   //AvailableTreatments
@@ -68,4 +68,4 @@ class AdvancedSettings{
 
   //Contracts
 }
-export default new AdvancedSettings();
+export default new AdvancedController();

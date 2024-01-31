@@ -3,11 +3,11 @@ import { sequelize } from '../instances/mysql';
 
 export interface ProceduresInstance extends Model{
   id:number;
-  icon:string;
+  clinic_id:string;
+  type_treatment:number;
   name:string;
   description:string;
-  professional:number;
-  contract:number;
+  professional_id:number;
   status:number;
 }
 
@@ -17,19 +17,19 @@ export const Procedures = sequelize.define<ProceduresInstance>('Procedures',{
     autoIncrement:true,
     type:DataTypes.INTEGER
   },
-  icon:{
-    type:DataTypes.STRING
+  clinic_id:{
+    type:DataTypes.INTEGER
   }, 
+  type_treatment:{
+    type:DataTypes.INTEGER
+  },
   name:{
     type:DataTypes.STRING
   },
   description:{
     type:DataTypes.STRING
   },
-  professional:{
-    type:DataTypes.INTEGER
-  },
-  contract:{
+  professional_id:{
     type:DataTypes.INTEGER
   },
   status:{
@@ -37,6 +37,6 @@ export const Procedures = sequelize.define<ProceduresInstance>('Procedures',{
     defaultValue:1
   }
 },{
-  tableName: 'procedures',
+  tableName: 'clinic_procedures',
   timestamps:false
 })

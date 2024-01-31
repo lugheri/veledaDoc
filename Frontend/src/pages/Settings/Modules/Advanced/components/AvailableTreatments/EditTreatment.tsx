@@ -8,7 +8,7 @@ import { faEdit, faFileCircleCheck, faFileContract } from "@fortawesome/free-sol
 import { EditClausule } from "./EditClausule"
 import { TextError } from "../../../../../../components/TextError"
 import { Button } from "../../../../../../components/Button"
-import { RemoveTreatment } from "./RemoveTrearment"
+import { RemoveTreatment } from "./RemoveTreatment"
 
 type EditTreatmentProps = {
   treatment:ITreatment,
