@@ -4,16 +4,16 @@ import { Levels } from "../models/Levels";
 
 class credentialServices{
   //CREDENTIALS
-  async totalCredentials(status:number):Promise<number>{
+  async totalCredentials(account_id:number,status:number):Promise<number>{
     const totalLevels = await Credentials.count({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
     })
     return totalLevels;
   }
 
   async createNewCredential(credentialData:CredentialDataType):Promise<boolean|CredentialsInstance>{
     const [ newCredential,created] = await Credentials.findOrCreate({
-      where: { name: credentialData.name},      
+      where: { account_id: credentialData.account_id, name: credentialData.name},      
       defaults:credentialData
     });
     //Setter Redis
@@ -33,13 +33,13 @@ class credentialServices{
     return true
   }
 
-  async listCredentials(status:number,page:number):Promise<CredentialsInstance[]>{
+  async listCredentials(account_id:number,status:number,page:number):Promise<CredentialsInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
     const listCredentials = await Credentials.findAll({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
       include: {model: Levels, attributes:['name']},
       offset:offset,
       limit:limit

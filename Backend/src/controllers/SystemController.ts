@@ -58,7 +58,9 @@ class SystemController{
 
   async getModules(req:Request,res:Response){
     const params = ModulesDTO.safeParse(req.params)
+    console.log('Params get modules')
     if(!params.success){
+      console.log('Params get modules erro',params.error)
       res.json({"error":params.error})
       return
     }
@@ -95,8 +97,8 @@ class SystemController{
       res.json({"error":params.error})
       return
     }
-    const { moduleId, levelId} = params.data
-    const access = await systemService.checkAccess(moduleId,levelId);
+    const { account_id,moduleId, levelId } = params.data
+    const access = await systemService.checkAccess(account_id,moduleId,levelId);
     res.json({"success": true,"response": access})  
   }
 }

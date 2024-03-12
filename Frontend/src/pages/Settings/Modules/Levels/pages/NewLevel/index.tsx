@@ -4,7 +4,13 @@ import { InputForm, TextAreaForm } from "../../../../../../components/Inputs"
 import { TitleModal } from "../../../../../../components/Modal"
 import api from '../../../../../../services/api';
 
-export const NewLevel: React.FC<{setNewLevel:React.Dispatch<React.SetStateAction<boolean>>}> = (props) => {
+type Props = {
+  account_id:number,
+  setNewLevel:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+
+export const NewLevel = (props:Props) => {
   const [name,setName]=useState('')
   const [description,setDescription]=useState('')
   
@@ -12,7 +18,7 @@ export const NewLevel: React.FC<{setNewLevel:React.Dispatch<React.SetStateAction
     e.preventDefault()
     try{
       props.setNewLevel(false)   
-      const data = {"name":name,"description":description,"status":1}
+      const data = {"account_id":props.account_id,"name":name,"description":description,"status":1}
       await api.post(`newLevel`, data)        
     }catch(e){
       console.log(e)

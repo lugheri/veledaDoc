@@ -1,10 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql'
 import { Credentials } from './Credentials';
-import { Teams } from './Teams';
+
 
 export interface UserInstance extends Model{
   id:number;
+  account_id:number;
   photo:number;
   name:string;
   username:string;
@@ -25,6 +26,9 @@ export const User = sequelize.define<UserInstance>("User",{
     autoIncrement: true,
     type: DataTypes.INTEGER
   },
+  account_id:{
+    type: DataTypes.INTEGER
+  },
   photo:{
     type: DataTypes.INTEGER
   },
@@ -35,13 +39,16 @@ export const User = sequelize.define<UserInstance>("User",{
     type: DataTypes.STRING
   },
   mail:{
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue:''
   },
   credential:{
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue:0
   },
   team_id:{
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue:0
   },
   password:{
     type: DataTypes.STRING

@@ -3,19 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as Fas from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { NavLink, useLocation } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
 import api from '../../../services/api';
+import { User } from '../../../contexts/Dtos/auth.dto';
 
+type Props = {
+  side:'open'|'closed',
+  setSide:React.Dispatch<React.SetStateAction<'open'|'closed'>>,
+  levelId:number,
+  userData:User
+}
 
-export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<React.SetStateAction<'open'|'closed'>>}> = (props) => {
-  const authenticate = useAuth();  
- 
+export const Sidebar = (props:Props) => { 
   const changeSide = () =>{props.setSide(props.side=='open'?'closed':'open')}
-
   const location = useLocation();
   const pageActive = location.pathname
   const pageMain = location.pathname.split('/')[1]
-
   const getDate = () => {
     const data = new Date();
     const weekDays = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"]    
@@ -38,17 +40,11 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
     order: number;
     status: number;
   }
-
-  const [ userLevel, setUserLevel ] = useState<number>(0)
   const [ retry, setRetry ] = useState<number>(0)
   const [ menu, setMenu ] = useState<itemSide[]>([])
   const [ menuSettings, setMenuSettings ] = useState<itemSide[]>([])
-
   const getMenu = async() => {
-    if(authenticate !== undefined ){ 
-      setUserLevel(authenticate.levelAccess) 
-    }
-    if(userLevel==0){
+    if(props.levelId==0){
       if(retry<=10){
         const tent = retry+1
         setRetry(tent)
@@ -57,10 +53,10 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
     try{
       const type='side'
       const parentModule=0
-      const menuItems = await api.get(`modules/${type}/${parentModule}/${userLevel}`)
+      const menuItems = await api.get(`modules/${props.userData.account_id}/${type}/${parentModule}/${props.levelId}`)     
       setMenu(menuItems.data.response)
       const typeSettings='set'  
-      const menuSetItems = await api.get(`modules/${typeSettings}/${parentModule}/${userLevel}`)
+      const menuSetItems = await api.get(`modules/${props.userData.account_id}/${typeSettings}/${parentModule}/${props.levelId}`)
       setMenuSettings(menuSetItems.data.response)
     }catch(e){
       console.log(e)
@@ -91,7 +87,7 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
                 moduleId={item.id}
                 name={ item.alias ? item.alias : '' } 
                 icon={ item.icon ? item.icon : null}/>  
-                { item.name === pageMain && <SubModulesMenu levelId={userLevel} side={props.side} parentModule={item.id} module={item.name}/>  }
+                { item.name === pageMain && <SubModulesMenu account_id={props.userData.account_id} levelId={props.levelId} side={props.side} parentModule={item.id} module={item.name}/>  }
             </div>
           ))}
           </div>
@@ -107,7 +103,7 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
                 moduleId={item.id}
                 name={ item.alias ? item.alias : '' } 
                 icon={ item.icon ? item.icon : null}/> 
-                { item.name === pageMain && <SubModulesMenu levelId={userLevel} side={props.side} parentModule={item.id} module={item.name}/>  } 
+                { item.name === pageMain && <SubModulesMenu account_id={props.userData.account_id} levelId={props.levelId} side={props.side} parentModule={item.id} module={item.name}/>  } 
                 <SideExitButton side={props.side}/>  
             </div> 
           ))}
@@ -118,10 +114,10 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
       <div className={`${props.side == 'open' ? "bg-slate-50 w-[220px] ml-[50px] flex flex-col items-center h-full drop-shadow-md block" : "w-0"} ease-in duration-300 `}>
         <div className="h-14 w-[220px] flex justify-center items-center text-center">
           <p className="tracking-tighter text-xl p-2 m-0 text-blue-950 font-thin">
-            <span className="font-bold border-b-blue-400 border-b border-b-4">VELEDA</span> CTO</p> 
+            <span className="font-bold border-b-blue-400 border-b border-b-4">MEGA</span> CRM</p> 
         </div>  
         <div className={`${props.side == 'open' ? 'inline' : 'hidden'} flex flex-col justify-center items-center`}>
-          <p className="text-sm text-slate-500">Nome da Clínica</p>
+          <p className="text-sm text-slate-500">{props.userData.account_id} Account Name</p>
           <p className="text-xs text-blue-500">{getDate()}</p>
         </div>  
       </div>
@@ -141,7 +137,7 @@ type ModuleItemProps = {
   side:'open'|'closed';
 };
 
-const ModuleItem : React.FC<ModuleItemProps> = (props) => {
+const ModuleItem = (props:ModuleItemProps ) => {
   const page = props.pageActive.split('/')[1]
   const isActiveSide = `/${page}` === props.to
  
@@ -177,7 +173,15 @@ const ModuleItem : React.FC<ModuleItemProps> = (props) => {
   )  
 }
 
-const SubModulesMenu : React.FC<{parentModule:number; module:string; levelId:number; side:'open'|'closed';}> = (props) => {
+type SubModuleProps = {
+  account_id:number,
+  parentModule:number; 
+  module:string; 
+  levelId:number; 
+  side:'open'|'closed';
+}
+
+const SubModulesMenu = (props:SubModuleProps) => {
   type itemSide = {
     id: number;
     parent: number;
@@ -193,7 +197,7 @@ const SubModulesMenu : React.FC<{parentModule:number; module:string; levelId:num
   const getSubModules = async () => {
     try{
       const type='side'
-      const menuItems = await api.get(`modules/${type}/${props.parentModule}/${props.levelId}`)
+      const menuItems = await api.get(`modules/${props.account_id}/${type}/${props.parentModule}/${props.levelId}`)
       setSubModules(menuItems.data.response) 
     }catch(e){
       console.log(e)

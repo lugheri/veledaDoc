@@ -1,10 +1,12 @@
 import {z} from 'zod';
 export const CheckAccessDTO = z.object({
+  account_id:z.string().transform((value)=>Number(value)),
   moduleId: z.string().transform((value) => Number(value)),
   levelId: z.string().transform((value) => Number(value))
 })
 
 export const ModulesDTO = z.object({
+  account_id:z.string().transform((value)=>Number(value)),
   type:z.string(),
   moduleParentId: z.string().transform((value)=>Number(value)),
   levelId:z.string().transform((value)=>Number(value))
@@ -12,6 +14,7 @@ export const ModulesDTO = z.object({
 export type ModulesType = z.infer<typeof ModulesDTO>
 
 export const SubModulesDTO = z.object({
+  account_id:z.string().transform((value)=>Number(value)),
   type: z.string(),
   module: z.string(),
   levelId: z.string().transform((value) => Number(value))

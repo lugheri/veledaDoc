@@ -27,7 +27,7 @@ class systemService{
   async modulesPolicies(params:ModulesType):Promise<ModulesInstance[]>{
     const modules = await Modules.findAll({
       where: {type: params.type, parent: params.moduleParentId ,status:1},order:[['order','ASC']],
-      include: { model: SecurityPolicies, attributes: [], where: { level_id: params.levelId, active:1},},
+      include: { model: SecurityPolicies, attributes: [], where: { account_id:params.account_id,level_id: params.levelId, active:1},},
     })
     return modules
   }
@@ -41,14 +41,13 @@ class systemService{
     const moduleData = await Modules.findOne({attributes: ['id'], where: {name: params.module}})
     const modules = await Modules.findAll({
       where: {type: params.type, parent: moduleData?.id ,status:1},order:[['order','ASC']],
-      include: { model: SecurityPolicies, attributes: [], where: { level_id: params.levelId, active:1},},
+      include: { model: SecurityPolicies, attributes: [], where: { account_id:params.account_id,level_id: params.levelId, active:1},},
     })
     return modules
   } 
 
-  async checkAccess(moduleId:number,levelId:number):Promise<boolean>{
-    const checkAccessPolice = await SecurityPolicies.findOne({attributes:['active'],
-                                                                   where:{level_id:levelId,module_id:moduleId}})
+  async checkAccess(account_id:number,moduleId:number,levelId:number):Promise<boolean>{
+    const checkAccessPolice = await SecurityPolicies.findOne({attributes:['active'],where:{account_id:account_id,level_id:levelId,module_id:moduleId}})
     return checkAccessPolice ? checkAccessPolice.active === 1 ? true : false : false
   }
 }

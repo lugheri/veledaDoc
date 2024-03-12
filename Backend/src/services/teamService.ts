@@ -4,16 +4,16 @@ import { Teams, TeamsInstance } from "../models/Teams";
 class teamService{
   async createNewTeam(teamData:TeamDataType):Promise<boolean|TeamsInstance>{
     const [ newTeam,created] = await Teams.findOrCreate({
-      where: { name: teamData.name},
+      where: { account_id:teamData.account_id, name: teamData.name},
       defaults:teamData
     });
     //Setter Redis
     return newTeam.id ? newTeam : false
   }
 
-  async totalTeams(status:number):Promise<number>{
+  async totalTeams(account_id:number,status:number):Promise<number>{
     const totalTeams = await Teams.count({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
     })
     return totalTeams;
   }
@@ -31,13 +31,13 @@ class teamService{
     return true
   }
 
-  async listTeams(status:number,page:number):Promise<TeamsInstance[]>{
+  async listTeams(account_id:number,status:number,page:number):Promise<TeamsInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
     const listTeams = await Teams.findAll({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
       offset:offset,
       limit:limit
     })

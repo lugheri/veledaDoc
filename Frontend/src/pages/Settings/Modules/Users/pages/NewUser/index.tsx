@@ -8,18 +8,22 @@ import * as Fas from "@fortawesome/free-solid-svg-icons";
 import { CredentialDTO } from '../../../Credentials/Dto/credential.dto';
 import { TeamDTO } from '../../../Teams/Dto/teams.dto';
 
-export const NewUser: React.FC<{setNewUser:React.Dispatch<React.SetStateAction<boolean>>}> = (props) => {
+type Props = {
+  account_id:number,
+  setNewUser:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const NewUser = (props:Props) => {
   const [name,setName]=useState('')
   const [username,setUsername]=useState('')
   const [credential,setCredential]=useState('0')
-  const [team_id,setTeamId]=useState('0')
   const [password,setPassword]=useState('') 
 
   //List Credentials
   const [ credentials, setCredentials] = useState<CredentialDTO[]|null>(null)
   const getCredentials = async () => {
     try{
-      const c = await api.get(`listCredentials/1/1`)
+      const c = await api.get(`listCredentials/${props.account_id}/1/1`)
       setCredentials(c.data.response)
     }catch(e){
       console.log(e)
@@ -27,23 +31,10 @@ export const NewUser: React.FC<{setNewUser:React.Dispatch<React.SetStateAction<b
   }
   useEffect(()=>{getCredentials()},[])
 
-  //List Teams
-  const [ teams, setTeams] = useState<TeamDTO[]|null>(null)
-  const getTeams = async () => {
-    try{
-      const t = await api.get(`listTeams/1/1`)
-      setTeams(t.data.response)
-    }catch(e){
-      console.log(e)
-    }
-  }
-  useEffect(()=>{getTeams()},[])
-  
-  
   const createNewUser = async (e:FormEvent) => {
     e.preventDefault()
     try{     
-      const data = {"name":name,"username":username,"credential":parseInt(credential),"team_id":parseInt(team_id),"password":password,"status":1}
+      const data = {"account_id":props.account_id,"name":name,"username":username,"credential":parseInt(credential),"password":password,"status":1}
       await api.post(`newUser`, data)        
     }catch(e){
       console.log(e)
@@ -64,13 +55,13 @@ export const NewUser: React.FC<{setNewUser:React.Dispatch<React.SetStateAction<b
         </div>
         <div className="flex w-full ">
           {credentials === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Cargos ...</p>
-           : <SelectForm className="mr-1" dataOptions={credentials} labelOption='name' valueOption='id'
+          : <SelectForm className="mr-1" dataOptions={credentials} labelOption='name' valueOption='id'
                 label="Cargo" required empty='Selecione um Cargo' 
                 value={credential} onChange={setCredential}/>}
-          {teams === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Cargos ...</p>
-           : <SelectForm dataOptions={teams} labelOption='name' valueOption='id'
+          {/*teams === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Cargos ...</p>
+          : <SelectForm dataOptions={teams} labelOption='name' valueOption='id'
                 label="Equipes" empty='Selecione uma Equipe' 
-                value={team_id} onChange={setTeamId}/>}
+          value={team_id} onChange={setTeamId}/>*/}
         </div>        
       </div>
       <div className="flex border-t mt-4 p-2 justify-end items-center">

@@ -12,9 +12,14 @@ import { Modal } from '../../../../components/Modal';
 import { NewCredential } from './pages/NewCredential';
 import { EditCredential } from './pages/EditCredential';
 import { RemoveCredential } from './pages/RemoveCredential';
+import { User } from '../../../../contexts/Dtos/auth.dto';
+import useAuth from '../../../../hooks/useAuth';
+import { Loading } from '../../../../components/Loading';
 
 
 export const Credentials = () => {
+  const authenticate = useAuth();  
+  const userData:User|null = authenticate ? authenticate.userData : null 
   const [ status, setStatus ] = useState(1)
   const [ totalCredentials, setTotalCredentials] = useState<number | null>(null)  
   //Actions
@@ -27,7 +32,7 @@ export const Credentials = () => {
 
   const countCredential = async () => {
     try{
-      const tl = await api.get(`totalCredentials/${status}`)
+      const tl = await api.get(`totalCredentials/${userData?.account_id}/${status}`)
       setTotalCredentials(tl.data.response)
     }catch(err){
       console.log(err)
@@ -39,53 +44,57 @@ export const Credentials = () => {
 
   
   return(
-    <div className="flex flex-col">
-      <TitlePage 
-        icon="faIdCardClip" 
-        title="Configurações | Cargos" 
-        rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Novo Cargo" onClick={()=>setNewCredential(true)}/>}/>
+    userData === null ? <Loading/> : (
+      <div className="flex flex-col">
+        <TitlePage 
+          icon="faIdCardClip" 
+          title="Configurações | Cargos" 
+          rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Novo Cargo" onClick={()=>setNewCredential(true)}/>}/>
 
-      <div className="bg-white p-2 rounded shadow flex justify-between items-center">
-        <p className="text-slate-400 flex-1 font-medium">
-          { totalCredentials === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
-          : `${totalCredentials} - Cargo(s)`} 
-        </p> 
-        <div className="w-1/5">
-          <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+        <div className="bg-white p-2 rounded shadow flex justify-between items-center">
+          <p className="text-slate-400 flex-1 font-medium">
+            { totalCredentials === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
+            : `${totalCredentials} - Cargo(s)`} 
+          </p> 
+          <div className="w-1/5">
+            <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+          </div>
         </div>
-      </div>
 
-      <Card className="mt-4" component={
-        <table className="table-auto w-full">
-          <thead className="text-slate-400 text-sm font-extralight">
-            <tr>
-              <th className="font-medium">Cód</th>
-              <th className="font-medium">Cargo</th>
-              <th className="font-medium">Descrição</th>
-              <th className="font-medium">Nível de Acesso</th>
-              <th className="font-medium">Status</th>
-              <th className="font-medium"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <PageCredentials 
-              page={1} 
-              status={status}
-              newCredential={newCredential}
-              editCredential={editCredential} setEditCredential={setEditCredential}
-              removeCredential={removeCredential} setRemoveCredential={setRemoveCredential}
-              setNameRemoveCredential={setNameRemoveCredential} setStatusRemoveCredential={setStatusRemoveCredential}/>  
-          </tbody>
-        </table>
-      }/>
-      {newCredential && <Modal component={<NewCredential setNewCredential={setNewCredential}/>} />}
-      {editCredential && <Modal component={<EditCredential editCredential={editCredential} setEditCredential={setEditCredential}/>}/>}
-      {removeCredential && <Modal component={<RemoveCredential name={nameRemoveCredential} status={statusRemoveCredential} removeCredential={removeCredential} setRemoveCredential={setRemoveCredential}/>}/>}
-    </div>
+        <Card className="mt-4" component={
+          <table className="table-auto w-full">
+            <thead className="text-slate-400 text-sm font-extralight">
+              <tr>
+                <th className="font-medium">Cód</th>
+                <th className="font-medium">Cargo</th>
+                <th className="font-medium">Descrição</th>
+                <th className="font-medium">Nível de Acesso</th>
+                <th className="font-medium">Status</th>
+                <th className="font-medium"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <PageCredentials 
+                account_id={userData?.account_id}
+                page={1} 
+                status={status}
+                newCredential={newCredential}
+                editCredential={editCredential} setEditCredential={setEditCredential}
+                removeCredential={removeCredential} setRemoveCredential={setRemoveCredential}
+                setNameRemoveCredential={setNameRemoveCredential} setStatusRemoveCredential={setStatusRemoveCredential}/>  
+            </tbody>
+          </table>
+        }/>
+        {newCredential && <Modal component={<NewCredential setNewCredential={setNewCredential} account_id={userData.account_id}/>} />}
+        {editCredential && <Modal component={<EditCredential editCredential={editCredential} setEditCredential={setEditCredential}/>}/>}
+        {removeCredential && <Modal component={<RemoveCredential name={nameRemoveCredential} status={statusRemoveCredential} removeCredential={removeCredential} setRemoveCredential={setRemoveCredential}/>}/>}
+      </div>
+    )
   )
 }
 
 type PageCredentialsDTO = {
+  account_id:number;
   status: number;
   page: number;
   newCredential: boolean;
@@ -101,7 +110,7 @@ const PageCredentials: React.FC<PageCredentialsDTO> = (props) => {
   const [ credentials, setCredentials ] = useState<CredentialDTO[] | null>(null)
   const listCredentials = async () => {
     try{
-      const tl = await api.get(`listCredentials/${props.status}/${props.page}`)
+      const tl = await api.get(`listCredentials/${props.account_id}/${props.status}/${props.page}`)
       setCredentials(tl.data.response)
     }catch(err){
       console.log(err)

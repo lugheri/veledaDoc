@@ -42,12 +42,12 @@ export const Login = () => {
         <div className="flex p-6 justify-start items-center">
           <div className="h-14 w-[195px] flex justify-center items-center text-center">
             <p className="tracking-tighter text-3xl p-2 m-0 text-white font-thin">
-              <span className="font-bold border-b-blue-400 border-b border-b-4">VELEDA</span> CTO
+              <span className="font-bold border-b-blue-400 border-b border-b-4">CLINIC</span> SAFE
             </p> 
           </div>    
         </div>
         <div className="flex flex-col flex-1 justify-center items-center">
-          <p className="text-white font-bold text-2xl">Bem vindo ao VELEDA CTO</p>
+          <p className="text-white font-bold text-2xl">Bem vindo ao CLINIC SAFE</p>
           <p className="text-slate-400 font-light text">Insira suas credenciais para acessar a sua conta.</p>
           <form onSubmit={sendAuth} className="flex flex-col justify-center items-center w-[60%] my-8">
             <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} className="w-full mt-4 mb-2 border-none focus:ring-0 rounded" placeholder="Usuário" required/>
@@ -62,7 +62,7 @@ export const Login = () => {
             </strong>)
             :false}      
           </form>    
-          <p className="py-8 text-xs text-slate-500">2023 Veleda DOC. Criado com <FontAwesomeIcon icon={Fas.faHeart}/> por Kraken Devs.</p>
+        
 
         </div>
         

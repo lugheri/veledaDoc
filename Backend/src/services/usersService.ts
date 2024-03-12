@@ -7,16 +7,16 @@ import { Op } from "sequelize"
 class usersService{
   async createNewUser(userData:UserDataType):Promise<boolean|UserInstance>{
     const [ newUser,created] = await User.findOrCreate({
-      where: { name: userData.name},
+      where: { account_id:userData.account_id, name: userData.name},
       defaults:userData
     });
     //Setter Redis
     return newUser.id ? newUser : false
   }
 
-  async totalUsers(status:number):Promise<number>{
+  async totalUsers(account_id:number,status:number):Promise<number>{
     const totalUsers = await User.count({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
     })
     return totalUsers;
   }
@@ -34,13 +34,13 @@ class usersService{
     return true
   }
 
-  async listUsers(status:number,page:number):Promise<UserInstance[]>{
+  async listUsers(account_id:number,status:number,page:number):Promise<UserInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
     const listUsers = await User.findAll({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
       include: {model: Credentials, attributes:['name']},      
       offset:offset,
       limit:limit

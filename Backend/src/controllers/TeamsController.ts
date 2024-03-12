@@ -4,9 +4,10 @@ import teamService from "../services/teamService";
 
 class TeamsController{
   async totalTeams(req:Request,res:Response){
+    const account_id = parseInt(req.params.account_id)
     const status:number = parseInt(req.params.status)
     try{
-      const totalTeams = await teamService.totalTeams(status)
+      const totalTeams = await teamService.totalTeams(account_id,status)
       res.json({"response":totalTeams})
       return
     }catch(err){
@@ -16,10 +17,11 @@ class TeamsController{
   }
 
   async listTeams(req:Request,res:Response){
+    const account_id = parseInt(req.params.account_id)
     const status:number = parseInt(req.params.status) 
     const page:number = parseInt(req.params.pag) 
     try{
-      const listTeams = await teamService.listTeams(status,page)
+      const listTeams = await teamService.listTeams(account_id,status,page)
       res.json({"response":listTeams})
       return
     }catch(err){

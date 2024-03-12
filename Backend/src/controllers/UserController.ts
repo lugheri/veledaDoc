@@ -4,9 +4,10 @@ import { SearchUserDTO, UserDataDTO, UserDataPartialDTO } from "./Dtos/userAcces
 
 class UserController{
   async totalUsers(req:Request,res:Response){
-    const status:number = parseInt(req.params.status)
+    const account_id = parseInt(req.params.account_id)
+    const status = parseInt(req.params.status)
     try{
-      const totalUsers = await usersService.totalUsers(status)
+      const totalUsers = await usersService.totalUsers(account_id,status)
       res.json({"response":totalUsers})
       return
     }catch(err){
@@ -16,10 +17,11 @@ class UserController{
   }
 
   async listUsers(req:Request,res:Response){
+    const account_id = parseInt(req.params.account_id)
     const status:number = parseInt(req.params.status) 
     const page:number = parseInt(req.params.pag) 
     try{
-      const listUsers = await usersService.listUsers(status,page)
+      const listUsers = await usersService.listUsers(account_id,status,page)
       res.json({"response":listUsers})
       return
     }catch(err){

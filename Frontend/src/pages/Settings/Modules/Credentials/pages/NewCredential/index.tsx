@@ -7,7 +7,11 @@ import { LevelDTO } from '../../../Levels/Dto/levels.dto';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Fas from "@fortawesome/free-solid-svg-icons";
 
-export const NewCredential: React.FC<{setNewCredential:React.Dispatch<React.SetStateAction<boolean>>}> = (props) => {
+type Props = {
+  setNewCredential:React.Dispatch<React.SetStateAction<boolean>>,
+  account_id:number
+}
+export const NewCredential = (props:Props) => {
   const [name,setName]=useState('')
   const [levelId, setLevelId] = useState<string>('');
   const [description,setDescription]=useState('')
@@ -15,7 +19,7 @@ export const NewCredential: React.FC<{setNewCredential:React.Dispatch<React.SetS
   const createNewCredential = async (e:FormEvent) => {
     e.preventDefault()
     props.setNewCredential(false)  
-    const data = {"name":name,"description":description,"level_id":parseInt(levelId),"status":1}
+    const data = {"account_id":props.account_id,"name":name,"description":description,"level_id":parseInt(levelId),"status":1}
     try{
       await api.post(`newCredential`, data)        
     }catch(e){
@@ -26,7 +30,7 @@ export const NewCredential: React.FC<{setNewCredential:React.Dispatch<React.SetS
   const [ levels, setLevels] = useState<LevelDTO[]|null>(null)
   const getLevels = async () => {
     try{
-      const l = await api.get(`listLevels/1/1`)
+      const l = await api.get(`listLevels/${props.account_id}/1/1`)
       console.log('l',l)
       setLevels(l.data.response)
     }catch(e){

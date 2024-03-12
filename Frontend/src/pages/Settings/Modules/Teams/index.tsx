@@ -12,9 +12,15 @@ import { Modal } from '../../../../components/Modal';
 import { NewTeam } from './pages/NewTeam';
 import { EditTeam } from './pages/EditTeam';
 import { RemoveTeam } from './pages/RemoveTeam';
+import useAuth from '../../../../hooks/useAuth';
+import { User } from '../../../../contexts/Dtos/auth.dto';
+import { Loading } from '../../../../components/Loading';
 
 
 export const Teams = () => {
+  const authenticate = useAuth();  
+  const userData:User|null = authenticate ? authenticate.userData : null
+
   const [ status, setStatus ] = useState(1)
   const [ totalTeams, setTotalTeams] = useState<number | null>(null)
   
@@ -30,7 +36,7 @@ export const Teams = () => {
 
   const countTeams = async () => {
     try{
-      const tl = await api.get(`totalTeams/${status}`)
+      const tl = await api.get(`totalTeams/${userData?.account_id}/${status}`)
       setTotalTeams(tl.data.response)
     }catch(err){
       console.log(err)
@@ -42,52 +48,56 @@ export const Teams = () => {
 
   
   return(
-    <div className="flex flex-col">
-      <TitlePage 
-        icon="faUsersLine" 
-        title="Configurações | Equipes" 
-        rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Nova Equipe" onClick={()=>setNewTeam(true)}/>}/>
+    userData === null ? <Loading/> : (
+      <div className="flex flex-col">
+        <TitlePage 
+          icon="faUsersLine" 
+          title="Configurações | Equipes" 
+          rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Nova Equipe" onClick={()=>setNewTeam(true)}/>}/>
 
-      <div className="bg-white p-2 rounded shadow flex justify-between items-center">
-        <p className="text-slate-400 flex-1 font-medium">
-          { totalTeams === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
-          : `${totalTeams} - Equipe(s)`} 
-        </p> 
-        <div className="w-1/5">
-          <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+        <div className="bg-white p-2 rounded shadow flex justify-between items-center">
+          <p className="text-slate-400 flex-1 font-medium">
+            { totalTeams === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
+            : `${totalTeams} - Equipe(s)`} 
+          </p> 
+          <div className="w-1/5">
+            <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+          </div>
         </div>
-      </div>
 
-      <Card className="mt-4" component={
-        <table className="table-auto w-full">
-          <thead className="text-slate-400 text-sm font-extralight">
-            <tr>
-              <th className="font-medium">Cód</th>
-              <th className="font-medium">Nível</th>
-              <th className="font-medium">Descrição</th>
-              <th className="font-medium">Status</th>
-              <th className="font-medium"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <PageTeams 
-              page={1} 
-              status={status}
-              newTeam={newTeam}
-              editTeam={editTeam} setEditTeam={setEditTeam}
-              removeTeam={removeTeam} setRemoveTeam={setRemoveTeam}
-              setNameRemoveTeam={setNameRemoveTeam} setStatusRemoveTeam={setStatusRemoveTeam}/>  
-          </tbody>
-        </table>
-      }/>
-      {newTeam && <Modal component={<NewTeam setNewTeam={setNewTeam}/>} />}
-      {editTeam && <Modal component={<EditTeam editTeam={editTeam} setEditTeam={setEditTeam}/>}/>}
-      {removeTeam && <Modal component={<RemoveTeam name={nameRemoveTeam} status={statusRemoveTeam} removeTeam={removeTeam} setRemoveTeam={setRemoveTeam}/>}/>}
-    </div>
+        <Card className="mt-4" component={
+          <table className="table-auto w-full">
+            <thead className="text-slate-400 text-sm font-extralight">
+              <tr>
+                <th className="font-medium">Cód</th>
+                <th className="font-medium">Nível</th>
+                <th className="font-medium">Descrição</th>
+                <th className="font-medium">Status</th>
+                <th className="font-medium"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <PageTeams 
+                account_id={userData.account_id}
+                page={1} 
+                status={status}
+                newTeam={newTeam}
+                editTeam={editTeam} setEditTeam={setEditTeam}
+                removeTeam={removeTeam} setRemoveTeam={setRemoveTeam}
+                setNameRemoveTeam={setNameRemoveTeam} setStatusRemoveTeam={setStatusRemoveTeam}/>  
+            </tbody>
+          </table>
+        }/>
+        {newTeam && <Modal component={<NewTeam setNewTeam={setNewTeam}/>} />}
+        {editTeam && <Modal component={<EditTeam editTeam={editTeam} setEditTeam={setEditTeam}/>}/>}
+        {removeTeam && <Modal component={<RemoveTeam name={nameRemoveTeam} status={statusRemoveTeam} removeTeam={removeTeam} setRemoveTeam={setRemoveTeam}/>}/>}
+      </div>
+    )
   )
 }
 
 type PageTeamsDTO = {
+  account_id:number;
   status: number;
   page: number;
   newTeam: boolean;
@@ -103,7 +113,7 @@ const PageTeams: React.FC<PageTeamsDTO> = (props) => {
   const [ teams, setTeams ] = useState<TeamDTO[] | null>(null)
   const listTeams = async () => {
     try{
-      const tl = await api.get(`listTeams/${props.status}/${props.page}`)
+      const tl = await api.get(`listTeams/${props.account_id}/${props.status}/${props.page}`)
       setTeams(tl.data.response)
     }catch(err){
       console.log(err)

@@ -12,9 +12,15 @@ import { Modal } from '../../../../components/Modal';
 import { NewLevel } from './pages/NewLevel';
 import { EditLevel } from './pages/EditLevel';
 import { RemoveLevel } from './pages/RemoveLevel';
+import { User } from '../../../../contexts/Dtos/auth.dto';
+import useAuth from '../../../../hooks/useAuth';
+import { Loading } from '../../../../components/Loading';
 
 
 export const Levels = () => {
+  const authenticate = useAuth();  
+  const userData:User|null = authenticate ? authenticate.userData : null
+  
   const [ status, setStatus ] = useState(1)
   const [ totalLevels, setTotalLevels] = useState<number | null>(null)
   
@@ -30,7 +36,7 @@ export const Levels = () => {
 
   const countLevels = async () => {
     try{
-      const tl = await api.get(`totalLevels/${status}`)
+      const tl = await api.get(`totalLevels/${userData?.account_id}/${status}`)
       setTotalLevels(tl.data.response)
     }catch(err){
       console.log(err)
@@ -42,52 +48,56 @@ export const Levels = () => {
 
   
   return(
-    <div className="flex flex-col">
-      <TitlePage 
-        icon="faKey" 
-        title="Configurações | Níveis de Acesso" 
-        rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Novo Nível" onClick={()=>setNewLevel(true)}/>}/>
+    userData === null ? <Loading/> : (
+      <div className="flex flex-col">
+        <TitlePage 
+          icon="faKey" 
+          title="Configurações | Níveis de Acesso" 
+          rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Novo Nível" onClick={()=>setNewLevel(true)}/>}/>
 
-      <div className="bg-white p-2 rounded shadow flex justify-between items-center">
-        <p className="text-slate-400 flex-1 font-medium">
-          { totalLevels === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
-          : `${totalLevels} - Níveis de Acesso`} 
-        </p> 
-        <div className="w-1/5">
-          <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+        <div className="bg-white p-2 rounded shadow flex justify-between items-center">
+          <p className="text-slate-400 flex-1 font-medium">
+            { totalLevels === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
+            : `${totalLevels} - Níveis de Acesso`} 
+          </p> 
+          <div className="w-1/5">
+            <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+          </div>
         </div>
-      </div>
 
-      <Card className="mt-4" component={
-        <table className="table-auto w-full">
-          <thead className="text-slate-400 text-sm font-extralight">
-            <tr>
-              <th className="font-medium">Cód</th>
-              <th className="font-medium">Nível</th>
-              <th className="font-medium">Descrição</th>
-              <th className="font-medium">Status</th>
-              <th className="font-medium"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <PageLevels 
-              page={1} 
-              status={status}
-              newLevel={newLevel}
-              editLevel={editLevel} setEditLevel={setEditLevel}
-              removeLevel={removeLevel} setRemoveLevel={setRemoveLevel}
-              setNameRemoveLevel={setNameRemoveLevel} setStatusRemoveLevel={setStatusRemoveLevel}/>  
-          </tbody>
-        </table>
-      }/>
-      {newLevel && <Modal component={<NewLevel setNewLevel={setNewLevel}/>} />}
-      {editLevel && <Modal component={<EditLevel editLevel={editLevel} setEditLevel={setEditLevel}/>}/>}
-      {removeLevel && <Modal component={<RemoveLevel name={nameRemoveLevel} status={statusRemoveLevel} removeLevel={removeLevel} setRemoveLevel={setRemoveLevel}/>}/>}
-    </div>
+        <Card className="mt-4" component={
+          <table className="table-auto w-full">
+            <thead className="text-slate-400 text-sm font-extralight">
+              <tr>
+                <th className="font-medium">Cód</th>
+                <th className="font-medium">Nível</th>
+                <th className="font-medium">Descrição</th>
+                <th className="font-medium">Status</th>
+                <th className="font-medium"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <PageLevels 
+                account_id={userData.account_id}
+                page={1} 
+                status={status}
+                newLevel={newLevel}
+                editLevel={editLevel} setEditLevel={setEditLevel}
+                removeLevel={removeLevel} setRemoveLevel={setRemoveLevel}
+                setNameRemoveLevel={setNameRemoveLevel} setStatusRemoveLevel={setStatusRemoveLevel}/>  
+            </tbody>
+          </table>
+        }/>
+        {newLevel && <Modal component={<NewLevel setNewLevel={setNewLevel} account_id={userData.account_id}/>} />}
+        {editLevel && <Modal component={<EditLevel editLevel={editLevel} setEditLevel={setEditLevel}/>}/>}
+        {removeLevel && <Modal component={<RemoveLevel name={nameRemoveLevel} status={statusRemoveLevel} removeLevel={removeLevel} setRemoveLevel={setRemoveLevel}/>}/>}
+      </div>
+    )
   )
 }
 
 type PageLevelsDTO = {
+  account_id:number;
   status: number;
   page: number;
   newLevel: boolean;
@@ -103,7 +113,7 @@ const PageLevels: React.FC<PageLevelsDTO> = (props) => {
   const [ levels, setLevels ] = useState<LevelDTO[] | null>(null)
   const listLevels = async () => {
     try{
-      const tl = await api.get(`listLevels/${props.status}/${props.page}`)
+      const tl = await api.get(`listLevels/${props.account_id}/${props.status}/${props.page}`)
       setLevels(tl.data.response)
     }catch(err){
       console.log(err)
