@@ -1,9 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql'
-import { Credentials } from './Credentials';
+import { SysCredentials } from './SysCredentials';
 
 
-export interface UserInstance extends Model{
+export interface SysUserInstance extends Model{
   id:number;
   account_id:number;
   photo:number;
@@ -20,7 +20,7 @@ export interface UserInstance extends Model{
   updatedAt:string;
 }
 
-export const User = sequelize.define<UserInstance>("User",{
+export const SysUser = sequelize.define<SysUserInstance>("SysUser",{
   id:{
     primaryKey: true,
     autoIncrement: true,
@@ -67,4 +67,4 @@ export const User = sequelize.define<UserInstance>("User",{
   tableName: "sys_users",
   timestamps: true
 })
-User.hasOne(Credentials, {foreignKey:'id', sourceKey:'credential'} )
+SysUser.hasOne(SysCredentials, {foreignKey:'id', sourceKey:'credential'} )

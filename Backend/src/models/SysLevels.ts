@@ -1,38 +1,24 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface AccountsInstance extends Model{
+export interface SysLevelsInstance extends Model{
   id:number;
-  account_owner:number;
-  date:string;
-  logo:number;
+  account_id:number;
   name:string;
-  cnpj:string;
   description:string;
   status:number;
 }
 
-export const Accounts = sequelize.define<AccountsInstance>('Accounts',{
+export const SysLevels = sequelize.define<SysLevelsInstance>('SysLevels',{
   id:{
     primaryKey:true,
     autoIncrement:true,
     type:DataTypes.INTEGER
   },
-  account_owner:{
-    type:DataTypes.INTEGER,
-    defaultValue:0
-  },
-  date:{
-    type:DataTypes.DATE,
-    defaultValue:DataTypes.NOW
-  }, 
-  logo:{
+  account_id:{
     type:DataTypes.INTEGER
   },
   name:{
-    type:DataTypes.STRING
-  },
-  cnpj:{
     type:DataTypes.STRING
   },
   description:{
@@ -43,6 +29,6 @@ export const Accounts = sequelize.define<AccountsInstance>('Accounts',{
     defaultValue:1
   }
 },{
-  tableName: 'accounts',
+  tableName: 'sys_levels',
   timestamps:false
 })

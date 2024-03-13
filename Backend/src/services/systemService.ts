@@ -1,6 +1,6 @@
 import { ModuleDataPartialType, ModuleDataType, ModulesType, SubModulesType } from "../controllers/Dtos/modules.dto";
-import { Modules, ModulesInstance } from "../models/Modules";
-import { SecurityPolicies } from "../models/SecurityPolicies";
+import { Modules, ModulesInstance } from "../models/SysModules";
+import { SecurityPolicies } from "../models/SysSecurityPolicies";
 
 class systemService{
   async createNewModule(moduleData:ModuleDataType):Promise<boolean|ModulesInstance>{

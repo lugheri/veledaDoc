@@ -1,5 +1,5 @@
 import { ProfessionalType } from "../controllers/Dtos/professional.dto"
-import { Professionals } from "../models/Professionals"
+import { Professionals } from "../models/ClinicProfessionals"
 
 class ProfessionalService{
   async newProfessional(dataProfessional:ProfessionalType){

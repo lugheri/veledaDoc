@@ -1,6 +1,6 @@
 import { PatientInformationType, PatientPersonalDataType } from "../controllers/Dtos/patient.dto"
-import { PatientPersonalData } from "../models/PatientPersonalData"
-import { PatientInformation } from "../models/PatientsInformation"
+import { PatientPersonalData } from "../models/ClinicPatientPersonalData"
+import { PatientInformation } from "../models/ClinicPatientsInformation"
 const { Op } = require('sequelize');
 
 class PatientService{

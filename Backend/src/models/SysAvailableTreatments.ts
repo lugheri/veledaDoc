@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../instances/mysql";
 
-export interface AvailableTreatmentsInstance extends Model{
+export interface SysAvailableTreatmentsInstance extends Model{
   id:number;
   name:string;
   description:string;
@@ -9,7 +9,7 @@ export interface AvailableTreatmentsInstance extends Model{
   status:number;
 }
 
-export const AvailableTreatments = sequelize.define<AvailableTreatmentsInstance>('AvailableTreatments',{
+export const SysAvailableTreatments = sequelize.define<SysAvailableTreatmentsInstance>('SysAvailableTreatments',{
   id:{
     primaryKey:true,
     autoIncrement:true,
@@ -28,6 +28,6 @@ export const AvailableTreatments = sequelize.define<AvailableTreatmentsInstance>
     type:DataTypes.TINYINT
   },
 },{
-  tableName:'available_treatments',
+  tableName:'sys_available_treatments',
   timestamps:false
 })

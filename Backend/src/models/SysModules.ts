@@ -1,9 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-import { SecurityPolicies } from './SecurityPolicies';
+import { SysSecurityPolicies } from './SysSecurityPolicies';
 
-export interface ModulesInstance extends Model{
+export interface SysModulesInstance extends Model{
   id:number;
   parent:number;
   name:string;
@@ -15,7 +15,7 @@ export interface ModulesInstance extends Model{
   status:number;
 }
 
-export const Modules = sequelize.define<ModulesInstance>('Modules',{
+export const SysModules = sequelize.define<SysModulesInstance>('SysModules',{
   id:{
     primaryKey:true,
     autoIncrement:true,
@@ -49,4 +49,4 @@ export const Modules = sequelize.define<ModulesInstance>('Modules',{
   tableName: 'sys_modules',
   timestamps:false
 })
-Modules.hasOne(SecurityPolicies, { foreignKey: 'module_id', sourceKey: 'id'});
+SysModules.hasOne(SysSecurityPolicies, { foreignKey: 'module_id', sourceKey: 'id'});

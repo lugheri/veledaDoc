@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface SecurityPoliciesInstance extends Model{
+export interface SysSecurityPoliciesInstance extends Model{
   id:number;
   account_id:number;
   level_id:number;
@@ -10,7 +10,7 @@ export interface SecurityPoliciesInstance extends Model{
   active:number;  
 }
 
-export const SecurityPolicies = sequelize.define<SecurityPoliciesInstance>('SecurityPolicies',{
+export const SysSecurityPolicies = sequelize.define<SysSecurityPoliciesInstance>('SysSecurityPolicies',{
   id:{
     primaryKey:true,
     autoIncrement:true,

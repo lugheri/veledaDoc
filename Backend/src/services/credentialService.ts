@@ -1,6 +1,6 @@
 import { CredentialDataPartialType, CredentialDataType } from "../controllers/Dtos/security.dto";
-import { Credentials, CredentialsInstance } from "../models/Credentials";
-import { Levels } from "../models/Levels";
+import { Credentials, CredentialsInstance } from "../models/SysCredentials";
+import { Levels } from "../models/SysLevels";
 
 class credentialServices{
   //CREDENTIALS

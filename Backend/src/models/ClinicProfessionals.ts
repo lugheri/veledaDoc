@@ -1,15 +1,16 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface PatientInformationInstance extends Model{
+export interface ClinicProfessionalsInstance extends Model{
   id:number;
   clinic_id:number;
-  admission_date:string;
+  date:string;
+  photo:number;
   name:string;
   status:number;
 }
 
-export const PatientInformation = sequelize.define<PatientInformationInstance>('PatientInformation',{
+export const ClinicProfessionals = sequelize.define<ClinicProfessionalsInstance>('ClinicProfessionals',{
   id:{
     primaryKey:true,
     autoIncrement:true,
@@ -17,10 +18,13 @@ export const PatientInformation = sequelize.define<PatientInformationInstance>('
   },
   clinic_id:{
     type:DataTypes.INTEGER
-  }, 
-  admission_date:{
+  },
+  date:{
     type:DataTypes.DATE,
     defaultValue:DataTypes.NOW
+  }, 
+  photo:{
+    type:DataTypes.INTEGER
   },
   name:{
     type:DataTypes.STRING
@@ -30,6 +34,6 @@ export const PatientInformation = sequelize.define<PatientInformationInstance>('
     defaultValue:1
   }
 },{
-  tableName: 'clinic_patient_information',
+  tableName: 'clinic_professionals',
   timestamps:false
 })

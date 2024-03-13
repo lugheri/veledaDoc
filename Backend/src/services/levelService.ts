@@ -1,5 +1,5 @@
 import { LevelDataPartialType, LevelDataType } from "../controllers/Dtos/security.dto";
-import { Levels, LevelsInstance } from "../models/Levels";
+import { Levels, LevelsInstance } from "../models/SysLevels";
 
 class levelServices{
   //CREDENTIALS

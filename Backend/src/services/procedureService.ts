@@ -1,5 +1,5 @@
 import { ProcedureType } from "../controllers/Dtos/procedure.dto"
-import { Procedures } from "../models/Procedures"
+import { Procedures } from "../models/ClinicProcedures"
 
 
 class ProcedureService{

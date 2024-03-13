@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config()
 
-import { Logins } from "../models/Logins";
-import { User,UserInstance } from "../models/Users";
+import { Logins } from "../models/SysLogins";
+import { User,UserInstance } from "../models/SysUsers";
 import { UserAccessType } from '../controllers/Dtos/userAccess.dto';
 
 class LoginServices {

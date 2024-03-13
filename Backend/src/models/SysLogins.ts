@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface LoginsInstance extends Model {
+export interface SysLoginsInstance extends Model {
   id: number;
   account_id:number;
   date: string;
@@ -10,7 +10,7 @@ export interface LoginsInstance extends Model {
   action:string;
 }
 
-export const Logins = sequelize.define<LoginsInstance>("Logins",{
+export const SysLogins = sequelize.define<SysLoginsInstance>("SysLogins",{
   id:{
     primaryKey: true,
     autoIncrement: true,
@@ -33,6 +33,6 @@ export const Logins = sequelize.define<LoginsInstance>("Logins",{
   }
 },
 {
-  tableName:"logins",
+  tableName:"sys_logins",
   timestamps:false
 })

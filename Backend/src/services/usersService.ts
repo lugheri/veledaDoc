@@ -1,7 +1,7 @@
 import { SearchUserType, UserDataPartialType, UserDataType } from "../controllers/Dtos/userAccess.dto";
-import { Credentials } from "../models/Credentials";
-import { Teams } from "../models/Teams";
-import { User, UserInstance } from "../models/Users"
+import { Credentials } from "../models/SysCredentials";
+import { Teams } from "../models/OffTeams";
+import { User, UserInstance } from "../models/SysUsers"
 import { Op } from "sequelize"
 
 class usersService{

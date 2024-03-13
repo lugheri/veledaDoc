@@ -1,5 +1,5 @@
 import { TeamDataPartialType, TeamDataType } from "../controllers/Dtos/userAccess.dto";
-import { Teams, TeamsInstance } from "../models/Teams";
+import { Teams, TeamsInstance } from "../models/OffTeams";
 
 class teamService{
   async createNewTeam(teamData:TeamDataType):Promise<boolean|TeamsInstance>{

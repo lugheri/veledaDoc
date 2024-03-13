@@ -1,5 +1,5 @@
 import { ContractType } from "../controllers/Dtos/contracts.dto";
-import { Contracts, ContractsInstance } from "../models/Contracts";
+import { Contracts, ContractsInstance } from "../models/SysContracts";
 
 class ContractService{
   async newContract(dataContract:ContractType):Promise<ContractsInstance>{

@@ -1,5 +1,5 @@
 import { PolicyDataPartialType, PolicyDataType } from "../controllers/Dtos/security.dto";
-import { SecurityPolicies, SecurityPoliciesInstance } from "../models/SecurityPolicies";
+import { SecurityPolicies, SecurityPoliciesInstance } from "../models/SysSecurityPolicies";
 
 class policyService{
   async createNewPolicy(policyData:PolicyDataType):Promise<boolean|SecurityPoliciesInstance>{

@@ -1,5 +1,5 @@
 import { ComponentContractType } from "../controllers/Dtos/contracts.dto"
-import { ContractsComponents, ContractsComponentsInstance } from "../models/ContractsComponents"
+import { ContractsComponents, ContractsComponentsInstance } from "../models/SysContractsComponents"
 
 class ComponentContractsService{
   async newComponentContract(dataComponentContract:ComponentContractType):Promise<ContractsComponentsInstance>{

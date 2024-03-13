@@ -1,27 +1,23 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
-import { Levels } from './Levels';
 
-export interface CredentialsInstance extends Model{
+export interface SysContractsInstance extends Model{
   id:number;
-  account_id:number;
-  level_id:number;
+  date:string;
   name:string;
   description:string;
   status:number;
 }
 
-export const Credentials = sequelize.define<CredentialsInstance>('Credentials',{
+export const SysContracts = sequelize.define<SysContractsInstance>('SysContracts',{
   id:{
     primaryKey:true,
     autoIncrement:true,
     type:DataTypes.INTEGER
   },
-  account_id:{
-    type:DataTypes.INTEGER
-  }, 
-  level_id:{
-    type:DataTypes.INTEGER
+  date:{
+    type:DataTypes.DATE,
+    defaultValue:DataTypes.NOW
   }, 
   name:{
     type:DataTypes.STRING
@@ -34,7 +30,6 @@ export const Credentials = sequelize.define<CredentialsInstance>('Credentials',{
     defaultValue:1
   }
 },{
-  tableName: 'sys_credentials',
+  tableName: 'sys_contracts',
   timestamps:false
 })
-Credentials.hasOne(Levels,{foreignKey:'id', sourceKey:'level_id'})

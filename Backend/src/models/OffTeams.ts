@@ -1,21 +1,18 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
+import { User } from './SysUsers';
 
-export interface LevelsInstance extends Model{
+export interface TeamsInstance extends Model{
   id:number;
-  account_id:number;
   name:string;
   description:string;
   status:number;
 }
 
-export const Levels = sequelize.define<LevelsInstance>('Levels',{
+export const Teams = sequelize.define<TeamsInstance>('Teams',{
   id:{
     primaryKey:true,
     autoIncrement:true,
-    type:DataTypes.INTEGER
-  },
-  account_id:{
     type:DataTypes.INTEGER
   },
   name:{
@@ -25,10 +22,10 @@ export const Levels = sequelize.define<LevelsInstance>('Levels',{
     type:DataTypes.STRING
   },
   status:{
-    type:DataTypes.TINYINT,
-    defaultValue:1
+    type:DataTypes.STRING
   }
 },{
-  tableName: 'sys_levels',
+  tableName:'teams',
   timestamps:false
 })
+Teams.hasOne(User, {foreignKey:'team_id',sourceKey:'id'})

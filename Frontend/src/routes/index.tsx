@@ -53,6 +53,12 @@ const RoutesApp = () => {
           children:[
             { index: true, element: <Home/>},
             {
+              path:'/newContract',
+              children:[
+                { index: true, element:<Schedule/>}
+              ]
+            },       
+            {
               path:'/schedule',
               children:[
                 { index: true, element:<Schedule/>}

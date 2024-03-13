@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
-export interface ContractsComponentsInstance extends Model{
+export interface SysContractsComponentsInstance extends Model{
   id:number;
   contract_id:number;
   title:string;
@@ -12,7 +12,7 @@ export interface ContractsComponentsInstance extends Model{
   status:number;
 }
 
-export const ContractsComponents = sequelize.define<ContractsComponentsInstance>('ContractsComponents',{
+export const SysContractsComponents = sequelize.define<SysContractsComponentsInstance>('SysContractsComponents',{
   id:{
     primaryKey:true,
     autoIncrement:true,
@@ -41,6 +41,6 @@ export const ContractsComponents = sequelize.define<ContractsComponentsInstance>
     defaultValue:1
   }
 },{
-  tableName: 'contracts_components',
+  tableName: 'sys_contracts_components',
   timestamps:false
 })

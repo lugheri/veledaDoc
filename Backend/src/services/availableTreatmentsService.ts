@@ -1,5 +1,5 @@
 import { AvailableTreatmentsType } from "../controllers/Dtos/availableTreatment.dto";
-import { AvailableTreatments } from "../models/AvailableTreatments";
+import { AvailableTreatments } from "../models/SysAvailableTreatments";
 
 class AvailableTreatmentsService{
   async newTreatment(dataTreatment:AvailableTreatmentsType){
