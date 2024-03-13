@@ -6,7 +6,6 @@ export interface PatientInformationInstance extends Model{
   clinic_id:number;
   admission_date:string;
   name:string;
-  gender:string;
   status:number;
 }
 
@@ -24,9 +23,6 @@ export const PatientInformation = sequelize.define<PatientInformationInstance>('
     defaultValue:DataTypes.NOW
   },
   name:{
-    type:DataTypes.STRING
-  },
-  gender:{
     type:DataTypes.STRING
   },
   status:{

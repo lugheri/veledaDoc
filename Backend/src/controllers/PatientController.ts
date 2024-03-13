@@ -11,6 +11,7 @@ class PatientController{
         await patientService.newPatient(dataPatient.data)
         res.json({"success":true})
       }catch(err){
+        console.log(err)
         res.json({"error":true,"message":"Ocorreu um erro ao salvar o item","error_info":err})
       }
       return
@@ -26,6 +27,17 @@ class PatientController{
       return
     }catch(err){
       res.json({"error":true,"message":"Ocorreu um erro ao recuperar os itens","error_info":err})
+    }
+  }
+
+  async searchPatients(req:Request,res:Response){
+    const params = req.params.params
+    try{
+      const list = await patientService.searchPatients(params) 
+      res.json({"success":true,"response":list})
+      return
+    }catch(err){
+      res.json({"error":true,"message":"Ocorreu um erro ao buscar os itens","error_info":err})
     }
   }
 

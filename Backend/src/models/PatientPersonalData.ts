@@ -3,7 +3,8 @@ import { sequelize } from '../instances/mysql';
 
 export interface PatientPersonalDataInstance extends Model{
   id:number;
-  patient_id:number;  
+  patient_id:number;    
+  gender:string;
   age:number
 }
 
@@ -18,7 +19,10 @@ export const PatientPersonalData = sequelize.define<PatientPersonalDataInstance>
   },  
   age:{
     type:DataTypes.INTEGER
-  }
+  },  
+  gender:{
+    type:DataTypes.STRING
+  },
 },{
   tableName: 'clinic_patient_personal_data',
   timestamps:false

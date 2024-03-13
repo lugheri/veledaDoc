@@ -1,13 +1,14 @@
 import { PatientInformationType, PatientPersonalDataType } from "../controllers/Dtos/patient.dto"
 import { PatientPersonalData } from "../models/PatientPersonalData"
 import { PatientInformation } from "../models/PatientsInformation"
+const { Op } = require('sequelize');
 
 class PatientService{
   async newPatient(dataPatientInformation:PatientInformationType){
     const [ newPatient,created ] = await PatientInformation.findOrCreate({
       where:{
         name:dataPatientInformation.name,
-        client_id:dataPatientInformation.clinic_id,
+        clinic_id:dataPatientInformation.clinic_id,
         status:1
       },
       defaults:dataPatientInformation
@@ -30,6 +31,19 @@ class PatientService{
     })
     return patients
   }
+
+  async searchPatients(params:string){
+    const patients = await PatientInformation.findAll({
+      where:{
+        [Op.or]: [
+          { name: { [Op.like]: `%${params}%` }},
+          { id:   { [Op.like]: `%${params}%` }}
+        ]
+      }
+    })
+    return patients
+  }
+
 
   async infoPatient(patientId:number){
     const info = await PatientInformation.findByPk(patientId)
