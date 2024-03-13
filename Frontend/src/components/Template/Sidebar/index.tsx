@@ -118,7 +118,7 @@ export const Sidebar: React.FC<{side:'open'|'closed',setSide:React.Dispatch<Reac
       <div className={`${props.side == 'open' ? "bg-slate-50 w-[220px] ml-[50px] flex flex-col items-center h-full drop-shadow-md block" : "w-0"} ease-in duration-300 `}>
         <div className="h-14 w-[220px] flex justify-center items-center text-center">
           <p className="tracking-tighter text-xl p-2 m-0 text-blue-950 font-thin">
-            <span className="font-bold border-b-blue-400 border-b border-b-4">VELEDA</span> CTO</p> 
+            <span className="font-bold border-b-blue-400 border-b border-b-4">C L I N I C</span>  S A F E</p> 
         </div>  
         <div className={`${props.side == 'open' ? 'inline' : 'hidden'} flex flex-col justify-center items-center`}>
           <p className="text-sm text-slate-500">Nome da Clínica</p>
