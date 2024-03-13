@@ -8,8 +8,8 @@ export default (routes:Router)=>{
   routes.delete(`/deleteModule/:moduleId`,SystemController.deleteModule)
 
   //Access Control
-  routes.get("/modules/:type/:moduleParentId/:levelId",SystemController.getModules)
+  routes.get("/modules/:account_id/:type/:moduleParentId/:levelId",SystemController.getModules)
   routes.get("/aliasModule/:moduleName",SystemController.aliasModule)
-  routes.get("/subModules/:type/:module/:levelId",SystemController.subModules)
-  routes.get("/checkAccess/:moduleId/:levelId",SystemController.getAccess);
+  routes.get("/subModules/:account_id/:type/:module/:levelId",SystemController.subModules)
+  routes.get("/checkAccess/:account_id/:moduleId/:levelId",SystemController.getAccess);
 }

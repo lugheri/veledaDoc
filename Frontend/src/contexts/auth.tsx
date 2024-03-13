@@ -26,8 +26,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             headers: {
               authorization: localStorage.getItem('Token')
             }
-          });
-          console.log('GetUserData',getUserData.data.response,`/getUser/${dataToken.userId}`)   
+          });  
           setUserData(getUserData.data.response)           
           const credential = userData ? await api.get(`/getCredential/${userData.credential}`) : null
           setLevelAccess(credential ? credential.data.response.level_id : 0)

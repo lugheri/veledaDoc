@@ -13,9 +13,15 @@ import { NewUser } from './pages/NewUser';
 import { EditUser } from './pages/EditUser';
 import { RemoveUser } from './pages/RemoveUser';
 import { ResetPass } from './pages/ResetPass';
+import useAuth from '../../../../hooks/useAuth';
+import { User } from '../../../../contexts/Dtos/auth.dto';
+import { Loading } from '../../../../components/Loading';
 
 
 export const Users = () => {
+  const authenticate = useAuth();  
+  const userData:User|null = authenticate ? authenticate.userData : null
+
   const [ status, setStatus ] = useState(1)
   const [ totalUsers, setTotalUsers] = useState<number | null>(null)  
   //Actions
@@ -31,7 +37,7 @@ export const Users = () => {
 
   const countUsers = async () => {
     try{
-      const tl = await api.get(`totalUsers/${status}`)
+      const tl = await api.get(`totalUsers/${userData?.account_id}/${status}`)
       setTotalUsers(tl.data.response)
     }catch(err){
       console.log(err)
@@ -43,55 +49,59 @@ export const Users = () => {
 
   
   return(
-    <div className="flex flex-col">
-      <TitlePage 
-        icon="faUserGroup" 
-        title="Configurações | Usuários" 
-        rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Nova Equipe" onClick={()=>setNewUser(true)}/>}/>
+    userData === null ? <Loading/> : (
+      <div className="flex flex-col">
+        <TitlePage 
+          icon="faUserGroup" 
+          title="Configurações | Usuários" 
+          rightComponent={<Button btn="success" icon="faPlus" name="Adicionar Nova Equipe" onClick={()=>setNewUser(true)}/>}/>
 
-      <div className="bg-white p-2 rounded shadow flex justify-between items-center">
-        <p className="text-slate-400 flex-1 font-medium">
-          { totalUsers === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
-          : `${totalUsers} - Usuário(s)`} 
-        </p> 
-        <div className="w-1/5">
-          <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+        <div className="bg-white p-2 rounded shadow flex justify-between items-center">
+          <p className="text-slate-400 flex-1 font-medium">
+            { totalUsers === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando ...</p> 
+            : `${totalUsers} - Usuário(s)`} 
+          </p> 
+          <div className="w-1/5">
+            <SelectForm dataOptions={changeStatus} labelOption='name' valueOption='status' value={status} onChange={setStatus} />
+          </div>
         </div>
-      </div>
-      <div className="flex flex-wrap">
-        <PageUsers 
-          page={1} 
-          status={status}
-          newUser={newUser}
-          editUser={editUser} setEditUser={setEditUser}          
-          removeUser={removeUser} setRemoveUser={setRemoveUser}
-          setNameRemoveUser={setNameRemoveUser} setStatusRemoveUser={setStatusRemoveUser}/>  
-      </div>
-      {newUser && <Modal component={<NewUser setNewUser={setNewUser}/>} />}
-      {editUser && <Modal component={<EditUser 
-                                          editUser={editUser} 
+        <div className="flex flex-wrap">
+          <PageUsers 
+            account_id={userData.account_id}
+            page={1} 
+            status={status}
+            newUser={newUser}
+            editUser={editUser} setEditUser={setEditUser}          
+            removeUser={removeUser} setRemoveUser={setRemoveUser}
+            setNameRemoveUser={setNameRemoveUser} setStatusRemoveUser={setStatusRemoveUser}/>  
+        </div>
+        {newUser && <Modal component={<NewUser setNewUser={setNewUser} account_id={userData.account_id}/>} />}
+        {editUser && <Modal component={<EditUser 
+                                            editUser={editUser} 
+                                            setEditUser={setEditUser} 
+                                            resetPass={resetPass} setResetPass={setResetPass}
+                                            setStatusRemoveUser={setStatusRemoveUser}
+                                            setNameResetUser={setNameResetUser}
+                                            setNameRemoveUser={setNameRemoveUser} 
+                                            setRemoveUser={setRemoveUser}/>}/>}
+        {resetPass && <Modal component={<ResetPass 
+                                          name={nameResetUser}  
                                           setEditUser={setEditUser} 
-                                          resetPass={resetPass} setResetPass={setResetPass}
-                                          setStatusRemoveUser={setStatusRemoveUser}
-                                          setNameResetUser={setNameResetUser}
-                                          setNameRemoveUser={setNameRemoveUser} 
-                                          setRemoveUser={setRemoveUser}/>}/>}
-      {resetPass && <Modal component={<ResetPass 
-                                        name={nameResetUser}  
-                                        setEditUser={setEditUser} 
-                                        resetPass={resetPass} 
-                                        setResetPass={setResetPass} />}/>}
-      {removeUser && <Modal component={<RemoveUser 
-                                          setEditUser={setEditUser} 
-                                          name={nameRemoveUser} 
-                                          status={statusRemoveUser} 
-                                          removeUser={removeUser} 
-                                          setRemoveUser={setRemoveUser}/>}/>}
-    </div>
+                                          resetPass={resetPass} 
+                                          setResetPass={setResetPass} />}/>}
+        {removeUser && <Modal component={<RemoveUser 
+                                            setEditUser={setEditUser} 
+                                            name={nameRemoveUser} 
+                                            status={statusRemoveUser} 
+                                            removeUser={removeUser} 
+                                            setRemoveUser={setRemoveUser}/>}/>}
+      </div>
+    )
   )
 }
 
-type PageUsersDTO = {
+type PropsPageUser = {
+  account_id:number;
   status: number;
   page: number;
   newUser: boolean;
@@ -103,11 +113,11 @@ type PageUsersDTO = {
   setStatusRemoveUser: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PageUsers: React.FC<PageUsersDTO> = (props) => {
+const PageUsers = (props:PropsPageUser) => {
   const [ users, setUsers ] = useState<UserDTO[] | null>(null)
   const listUsers = async () => {
     try{
-      const tl = await api.get(`listUsers/${props.status}/${props.page}`)
+      const tl = await api.get(`listUsers/${props.account_id}/${props.status}/${props.page}`)
       setUsers(tl.data.response)
     }catch(err){
       console.log(err)

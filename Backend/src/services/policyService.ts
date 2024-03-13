@@ -4,7 +4,7 @@ import { SecurityPolicies, SecurityPoliciesInstance } from "../models/SecurityPo
 class policyService{
   async createNewPolicy(policyData:PolicyDataType):Promise<boolean|SecurityPoliciesInstance>{
     const [ newPolicy,created] = await SecurityPolicies.findOrCreate({
-      where: { level_id: policyData.level_id, module_id: policyData.module_id, parent_module_id: policyData.parent_module_id},
+      where: { account_id:policyData.account_id, level_id: policyData.level_id, module_id: policyData.module_id, parent_module_id: policyData.parent_module_id},
       defaults:policyData
     });
     //Setter Redis
@@ -24,13 +24,13 @@ class policyService{
     return true
   }
 
-  async listPolicies(status:number,page:number):Promise<SecurityPoliciesInstance[]>{
+  async listPolicies(account_id:number,status:number,page:number):Promise<SecurityPoliciesInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
     const listPolicies = await SecurityPolicies.findAll({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
       offset:offset,
       limit:limit
     })

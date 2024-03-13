@@ -4,10 +4,11 @@ import { PolicyDataDTO, PolicyDataPartialDTO } from "./Dtos/security.dto";
 
 class PoliciesController{
   async listPolicies(req:Request,res:Response){
+    const account_id:number = parseInt(req.params.account_id) 
     const status:number = parseInt(req.params.status) 
     const page:number = parseInt(req.params.pag) 
     try{
-      const listPolicies = await policyService.listPolicies(status,page)
+      const listPolicies = await policyService.listPolicies(account_id,status,page)
       res.json({"response":listPolicies})
       return
     }catch(err){

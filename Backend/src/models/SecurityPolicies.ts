@@ -3,6 +3,7 @@ import { sequelize } from '../instances/mysql';
 
 export interface SecurityPoliciesInstance extends Model{
   id:number;
+  account_id:number;
   level_id:number;
   module_id:number;
   parent_module_id:number;
@@ -13,6 +14,9 @@ export const SecurityPolicies = sequelize.define<SecurityPoliciesInstance>('Secu
   id:{
     primaryKey:true,
     autoIncrement:true,
+    type:DataTypes.INTEGER
+  },
+  account_id:{
     type:DataTypes.INTEGER
   },
   level_id:{

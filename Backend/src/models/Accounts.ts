@@ -3,6 +3,7 @@ import { sequelize } from '../instances/mysql';
 
 export interface AccountsInstance extends Model{
   id:number;
+  account_owner:number;
   date:string;
   logo:number;
   name:string;
@@ -16,6 +17,10 @@ export const Accounts = sequelize.define<AccountsInstance>('Accounts',{
     primaryKey:true,
     autoIncrement:true,
     type:DataTypes.INTEGER
+  },
+  account_owner:{
+    type:DataTypes.INTEGER,
+    defaultValue:0
   },
   date:{
     type:DataTypes.DATE,

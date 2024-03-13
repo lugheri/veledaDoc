@@ -5,7 +5,7 @@ class levelServices{
   //CREDENTIALS
   async createNewLevel(levelData:LevelDataType):Promise<boolean|LevelsInstance>{
     const [ newLevel,created] = await Levels.findOrCreate({
-      where: { name: levelData.name},
+      where: { account_id:levelData.account_id, name: levelData.name},
       defaults:levelData
     });
     //Setter Redis
@@ -25,20 +25,20 @@ class levelServices{
     return true
   }
 
-  async totalLevels(status:number):Promise<number>{
+  async totalLevels(account_id:number,status:number):Promise<number>{
     const totalLevels = await Levels.count({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
     })
     return totalLevels;
   }
 
-  async listLevels(status:number,page:number):Promise<LevelsInstance[]>{
+  async listLevels(account_id:number,status:number,page:number):Promise<LevelsInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
     const listLevels = await Levels.findAll({
-      where:{status:status},
+      where:{account_id:account_id,status:status},
       offset:offset,
       limit:limit
     })

@@ -3,6 +3,7 @@ import { z } from "zod";
 //LEVELS
 export const LevelDataDTO = z.object({
   name:z.string(),
+  account_id:z.number(),
   description: z.optional(z.string()).default('Sem Descrição'),
   status: z.optional(z.literal(1).or(z.literal(0))).default(1),
 })
@@ -13,6 +14,7 @@ export type LevelDataPartialType = z.infer<typeof LevelDataPartialDTO>;
 
 //CREDENTIALS
 export const CredentialDataDTO = z.object({
+  account_id:z.number(),
   name:z.string(),
   level_id: z.number(),
   description: z.optional(z.string()).default('Sem Descrição'),
@@ -25,6 +27,7 @@ export type CredentialDataPartialType = z.infer<typeof CredentialDataPartialDTO>
 
 //POLICIES
 export const PolicyDataDTO = z.object({
+  account_id:z.number(),
   level_id: z.number(),
   module_id: z.number(),
   parent_module_id: z.optional(z.number()).default(0),

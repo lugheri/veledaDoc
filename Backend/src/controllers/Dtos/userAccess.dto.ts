@@ -9,11 +9,11 @@ export type UserAccessType = z.infer<typeof UserAccessDTO>;
 
 //USERS
 export const UserDataDTO = z.object({
+  account_id:z.number(),
   name:z.string(),
   username:z.string(),
   mail:z.optional(z.string()),
   credential: z.number(),
-  team_id: z.optional(z.number()).default(0),
   password:z.string().transform(v=>md5(v)),
   reset: z.optional(z.number()).default(1),
   logged: z.optional(z.number()).default(0),
@@ -32,6 +32,7 @@ export const PaginationUserDTO = z.object({
 export type PaginationUserType = z.infer<typeof PaginationUserDTO>;
 
 export const SearchUserDTO = z.object({
+  account_id:z.number(),
   params: z.string(),
   value:z.string(),
   status: z.optional(z.literal(1).or(z.literal(0))).default(1),
@@ -44,6 +45,7 @@ export type SearchUserType = z.infer<typeof SearchUserDTO>
 
 //TEAMS
 export const TeamDataDTO = z.object({
+  account_id:z.number(),
   name:z.string(),
   description:z.optional(z.string()).default('Sem Descrição'),
   status:z.optional(z.literal(1).or(z.literal(0))).default(1),

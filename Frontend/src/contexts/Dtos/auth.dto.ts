@@ -1,6 +1,7 @@
 
 export interface User{
   id:number;
+  account_id:number;
   photo:number;
   name:string;
   username:string;
@@ -12,6 +13,15 @@ export interface User{
   status:number;
   createdAt:string;
   updatedAt:string;
+}
+
+export interface ICredential {
+  id: number;
+  account_id:number;
+  level_id: number;
+  name: string;
+  description: string;
+  status: number;
 }
 
 export interface AuthContextType {

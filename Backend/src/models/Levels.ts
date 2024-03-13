@@ -3,6 +3,7 @@ import { sequelize } from '../instances/mysql';
 
 export interface LevelsInstance extends Model{
   id:number;
+  account_id:number;
   name:string;
   description:string;
   status:number;
@@ -12,6 +13,9 @@ export const Levels = sequelize.define<LevelsInstance>('Levels',{
   id:{
     primaryKey:true,
     autoIncrement:true,
+    type:DataTypes.INTEGER
+  },
+  account_id:{
     type:DataTypes.INTEGER
   },
   name:{

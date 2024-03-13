@@ -5,9 +5,10 @@ import { CredentialDataDTO, CredentialDataPartialDTO } from "./Dtos/security.dto
 
 class CredentialController{  
   async totalCredentials(req:Request,res:Response){
+    const account_id:number = parseInt(req.params.account_id) 
     const status:number = parseInt(req.params.status)
     try{
-      const totalCredentials = await credentialService.totalCredentials(status)
+      const totalCredentials = await credentialService.totalCredentials(account_id,status)
       res.json({"response":totalCredentials})
       return
     }catch(err){
@@ -17,10 +18,11 @@ class CredentialController{
   }
 
   async listCredentials(req:Request,res:Response){
+    const account_id:number = parseInt(req.params.account_id) 
     const status:number = parseInt(req.params.status) 
     const page:number = parseInt(req.params.pag) 
     try{
-      const listCredentials = await credentialService.listCredentials(status,page)
+      const listCredentials = await credentialService.listCredentials(account_id,status,page)
       res.json({"response":listCredentials})
       return
     }catch(err){

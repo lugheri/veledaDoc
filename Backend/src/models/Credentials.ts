@@ -4,6 +4,7 @@ import { Levels } from './Levels';
 
 export interface CredentialsInstance extends Model{
   id:number;
+  account_id:number;
   level_id:number;
   name:string;
   description:string;
@@ -16,6 +17,9 @@ export const Credentials = sequelize.define<CredentialsInstance>('Credentials',{
     autoIncrement:true,
     type:DataTypes.INTEGER
   },
+  account_id:{
+    type:DataTypes.INTEGER
+  }, 
   level_id:{
     type:DataTypes.INTEGER
   }, 
