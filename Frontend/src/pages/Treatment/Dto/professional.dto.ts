@@ -1,8 +1,19 @@
 export interface IProfessional{
   id:number;
   clinic_id:number;
-  date:string;
+  hire_date:string;
+  termination_date:string;
   photo:number;
   name:string;
+  birth_date:string;
+  gender:string;
+  marital_status:string;
+  crm:string;
+  document_type:string;
+  document:string;
+  number_cell:string;
+  number_phone:string;
+  number_additional:string;
+  email:string;
   status:number;
 }

@@ -88,8 +88,8 @@ export const Levels = () => {
             </tbody>
           </table>
         }/>
-        {newLevel && <Modal component={<NewLevel setNewLevel={setNewLevel} account_id={userData.account_id}/>} />}
-        {editLevel && <Modal component={<EditLevel editLevel={editLevel} setEditLevel={setEditLevel}/>}/>}
+        {newLevel && <Modal component={<NewLevel account_id={userData.account_id} setNewLevel={setNewLevel}/>} />}
+        {editLevel && <Modal component={<EditLevel account_id={userData.account_id} editLevel={editLevel} setEditLevel={setEditLevel}/>}/>}
         {removeLevel && <Modal component={<RemoveLevel name={nameRemoveLevel} status={statusRemoveLevel} removeLevel={removeLevel} setRemoveLevel={setRemoveLevel}/>}/>}
       </div>
     )

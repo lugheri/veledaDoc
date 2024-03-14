@@ -9,6 +9,7 @@ import { CredentialDTO } from '../../../Credentials/Dto/credential.dto';
 import { TeamDTO } from '../../../Teams/Dto/teams.dto';
 
 type EditUserDTO = {
+  account_id:number,
   editUser:number|null,
   resetPass:number|null,
   setResetPass:React.Dispatch<React.SetStateAction<number|null>>,
@@ -30,7 +31,7 @@ export const EditUser: React.FC<EditUserDTO> = (props) => {
   const [ credentials, setCredentials] = useState<CredentialDTO[]|null>(null)
   const getCredentials = async () => {
     try{
-      const c = await api.get(`listCredentials/1/1`)
+      const c = await api.get(`listCredentials/${props.account_id}/1/1`)
       setCredentials(c.data.response)
     }catch(e){
       console.log(e)
@@ -38,17 +39,7 @@ export const EditUser: React.FC<EditUserDTO> = (props) => {
   }
   useEffect(()=>{getCredentials()},[])
 
-  //List Teams
-  const [ teams, setTeams] = useState<TeamDTO[]|null>(null)
-  const getTeams = async () => {
-    try{
-      const t = await api.get(`listTeams/1/1`)
-      setTeams(t.data.response)
-    }catch(e){
-      console.log(e)
-    }
-  }
-  useEffect(()=>{getTeams()},[])
+
 
   const infoUser = async () => {
     try{     
@@ -102,10 +93,7 @@ export const EditUser: React.FC<EditUserDTO> = (props) => {
            : <SelectForm className="mr-1" dataOptions={credentials} labelOption='name' valueOption='id'
                 label="Cargo" required empty='Selecione um Cargo' 
                 value={credential} onChange={setCredential}/>}
-          {teams === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Cargos ...</p>
-           : <SelectForm dataOptions={teams} labelOption='name' valueOption='id'
-                label="Equipes" empty='Selecione uma Equipe' 
-                value={team_id} onChange={setTeamId}/>}
+          
         </div>        
       </div>
       <div className="flex border-t mt-4 p-2 justify-end items-center">

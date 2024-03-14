@@ -1,12 +1,11 @@
 import { SearchUserType, UserDataPartialType, UserDataType } from "../controllers/Dtos/userAccess.dto";
-import { Credentials } from "../models/SysCredentials";
-import { Teams } from "../models/OffTeams";
-import { User, UserInstance } from "../models/SysUsers"
+import { SysCredentials } from "../models/SysCredentials";
+import { SysUser, SysUserInstance } from "../models/SysUsers"
 import { Op } from "sequelize"
 
 class usersService{
-  async createNewUser(userData:UserDataType):Promise<boolean|UserInstance>{
-    const [ newUser,created] = await User.findOrCreate({
+  async createNewUser(userData:UserDataType):Promise<boolean|SysUserInstance>{
+    const [ newUser,created] = await SysUser.findOrCreate({
       where: { account_id:userData.account_id, name: userData.name},
       defaults:userData
     });
@@ -15,33 +14,33 @@ class usersService{
   }
 
   async totalUsers(account_id:number,status:number):Promise<number>{
-    const totalUsers = await User.count({
+    const totalUsers = await SysUser.count({
       where:{account_id:account_id,status:status},
     })
     return totalUsers;
   }
 
-  async getUser(userId:number):Promise<null|UserInstance>{
+  async getUser(userId:number):Promise<null|SysUserInstance>{
     //Redis Implementation
-    const userData = await User.findByPk(userId)
+    const userData = await SysUser.findByPk(userId)
     //Redis Update
     return userData ? userData : null
   }
   
   async updateUser(userId:number,userData:UserDataPartialType):Promise<boolean>{
-    await User.update(userData,{where:{id:userId}})
+    await SysUser.update(userData,{where:{id:userId}})
     //Update Redis
     return true
   }
 
-  async listUsers(account_id:number,status:number,page:number):Promise<UserInstance[]>{
+  async listUsers(account_id:number,status:number,page:number):Promise<SysUserInstance[]>{
     //Get Redis
     const p = page-1
     const limit=30
     const offset=limit*p
-    const listUsers = await User.findAll({
+    const listUsers = await SysUser.findAll({
       where:{account_id:account_id,status:status},
-      include: {model: Credentials, attributes:['name']},      
+      include: {model: SysCredentials, attributes:['name']},      
       offset:offset,
       limit:limit
     })
@@ -49,12 +48,12 @@ class usersService{
     return listUsers
   }
 
-  async searchUser(searchParams:SearchUserType):Promise<UserInstance[]>{
+  async searchUser(searchParams:SearchUserType):Promise<SysUserInstance[]>{
     //Get Redis
     const p = searchParams.page-1
     const limit=30
     const offset=limit*p
-    const listUsers = await User.findAll({
+    const listUsers = await SysUser.findAll({
       where:{
         [searchParams.params]: {[Op.like]: `%${searchParams.value}%`},
         status:searchParams.status},
@@ -66,7 +65,7 @@ class usersService{
   }
 
   async deleteUser(userId:number):Promise<boolean>{
-    await User.destroy({where:{id:userId}})
+    await SysUser.destroy({where:{id:userId}})
     //Update Redis
     return true
   }

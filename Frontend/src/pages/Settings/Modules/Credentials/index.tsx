@@ -85,8 +85,8 @@ export const Credentials = () => {
             </tbody>
           </table>
         }/>
-        {newCredential && <Modal component={<NewCredential setNewCredential={setNewCredential} account_id={userData.account_id}/>} />}
-        {editCredential && <Modal component={<EditCredential editCredential={editCredential} setEditCredential={setEditCredential}/>}/>}
+        {newCredential && <Modal component={<NewCredential account_id={userData.account_id} setNewCredential={setNewCredential}/>} />}
+        {editCredential && <Modal component={<EditCredential account_id={userData.account_id} editCredential={editCredential} setEditCredential={setEditCredential}/>}/>}
         {removeCredential && <Modal component={<RemoveCredential name={nameRemoveCredential} status={statusRemoveCredential} removeCredential={removeCredential} setRemoveCredential={setRemoveCredential}/>}/>}
       </div>
     )
@@ -126,7 +126,7 @@ const PageCredentials: React.FC<PageCredentialsDTO> = (props) => {
           <td>{credential.id}</td>
           <td>{credential.name}</td>
           <td>{credential.description}</td>
-          <td>{credential.Level.name}</td>
+          <td>{credential.SysLevel.name}</td>
           <td>{credential.status == 1 ? 'Ativo' : 'Inativo'}</td>
           <td className="flex justify-end">
             <Button icon="faEdit" btn='info' size='sm' onClick={()=>props.setEditCredential(credential.id)}/>

@@ -13,7 +13,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   //Validation Data
   const validation = async () => {
     if(localStorage.getItem('Token')){
-     
       try{
         const verificateValidationToken = await api.get('/validation',{
           headers: {            

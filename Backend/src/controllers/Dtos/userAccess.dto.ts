@@ -11,12 +11,13 @@ export type UserAccessType = z.infer<typeof UserAccessDTO>;
 export const UserDataDTO = z.object({
   account_id:z.number(),
   name:z.string(),
+  photo:z.number(),
   username:z.string(),
   mail:z.optional(z.string()),
   credential: z.number(),
   password:z.string().transform(v=>md5(v)),
-  reset: z.optional(z.number()).default(1),
   logged: z.optional(z.number()).default(0),
+  reset: z.optional(z.number()).default(1),
   status: z.optional(z.literal(1).or(z.literal(0))).default(1),
 })
 export type UserDataType = z.infer<typeof UserDataDTO>;
@@ -41,18 +42,3 @@ export const SearchUserDTO = z.object({
   orderedBy: z.optional(z.string()).default('id'),
 })
 export type SearchUserType = z.infer<typeof SearchUserDTO>
-
-
-//TEAMS
-export const TeamDataDTO = z.object({
-  account_id:z.number(),
-  name:z.string(),
-  description:z.optional(z.string()).default('Sem Descrição'),
-  status:z.optional(z.literal(1).or(z.literal(0))).default(1),
-})
-export type TeamDataType = z.infer<typeof TeamDataDTO>
-
-export const TeamDataPartialDTO = TeamDataDTO.partial();
-export type TeamDataPartialType = z.infer<typeof TeamDataPartialDTO>
-
-

@@ -19,7 +19,7 @@ export const Template = () => {
         <Sidebar userData={userData} levelId={levelId} side={side} setSide={setSide}/>
         <div className="flex flex-col w-screen overflow-auto">
           <Navbar side={side} userName={userData.name} credential={userData.credential}/>
-          <div className="h-[92.5vh] bg-slate-200 overflow-auto px-4">
+          <div className="h-[92.5vh] bg-slate-200 overflow-auto">
             <Outlet/>
           </div>
         </div>      

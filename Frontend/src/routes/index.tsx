@@ -26,7 +26,6 @@ import { Users } from "../pages/Settings/Modules/Users";
 import { Advanced } from "../pages/Settings/Modules/Advanced";
 import { Levels } from "../pages/Settings/Modules/Levels";
 import { Credentials } from "../pages/Settings/Modules/Credentials";
-import { Teams } from "../pages/Settings/Modules/Teams";
 import { OpenContract } from "../pages/Settings/Modules/Advanced/components/Contracts/OpenContract";
 
 
@@ -99,7 +98,6 @@ const RoutesApp = () => {
               children:[
                 { index: true, element:<Settings/>},
                 { path: '/settings/users', element:<Users/>},
-                { path: '/settings/teams', element:<Teams/>},
                 { path: '/settings/credentials', element:<Credentials/>},
                 { path: '/settings/levels', element:<Levels/>},
                 { path: '/settings/advanced', element:<Advanced/>},

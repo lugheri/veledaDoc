@@ -75,8 +75,10 @@ export const Users = () => {
             removeUser={removeUser} setRemoveUser={setRemoveUser}
             setNameRemoveUser={setNameRemoveUser} setStatusRemoveUser={setStatusRemoveUser}/>  
         </div>
-        {newUser && <Modal component={<NewUser setNewUser={setNewUser} account_id={userData.account_id}/>} />}
+        {newUser && <Modal component={<NewUser 
+                                        account_id={userData.account_id} setNewUser={setNewUser}/>} />}
         {editUser && <Modal component={<EditUser 
+                                            account_id={userData.account_id}
                                             editUser={editUser} 
                                             setEditUser={setEditUser} 
                                             resetPass={resetPass} setResetPass={setResetPass}
@@ -118,6 +120,7 @@ const PageUsers = (props:PropsPageUser) => {
   const listUsers = async () => {
     try{
       const tl = await api.get(`listUsers/${props.account_id}/${props.status}/${props.page}`)
+      console.log('LIST USERS',tl.data.response)
       setUsers(tl.data.response)
     }catch(err){
       console.log(err)
@@ -162,7 +165,7 @@ const PageUsers = (props:PropsPageUser) => {
           </div>
           <div className="flex items-center w-full justify-between py-1 ">
             <p className="text-slate-400 font-semibold text-xs">Cargo</p>
-            <p className="text-slate-400 text-xs text-right">{user.Credential.name}</p>
+            <p className="text-slate-400 text-xs text-right">{user.SysCredential.name}</p>
           </div>
         </div>
       }/>) 

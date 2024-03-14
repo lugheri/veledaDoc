@@ -1,35 +1,34 @@
 import { ProfessionalType } from "../controllers/Dtos/professional.dto"
-import { Professionals } from "../models/ClinicProfessionals"
+import { ClinicProfessionals } from "../models/ClinicProfessionals"
 
 class ProfessionalService{
   async newProfessional(dataProfessional:ProfessionalType){
-    const [ newProfessional,created ] = await Professionals.findOrCreate({
+    const [ newProfessional ] = await ClinicProfessionals.findOrCreate({
       where:{
-        name:dataProfessional.name,
+        name:dataProfessional.crm,
         clinic_id:dataProfessional.clinic_id,
         status:1
       },
       defaults:dataProfessional
     })
-    console.log(created)
-    return newProfessional
+    return newProfessional.id
   }
-  async listProfessional(status:number){
-    const profissionals = await Professionals.findAll({
-      where:{status:status}
+  async listProfessional(accountId:number,status:number){
+    const professionals = await ClinicProfessionals.findAll({
+      where:{clinic_id:accountId,status:status}
     })
-    return profissionals
+    return professionals
   }
   async infoProfessional(professionalId:number){
-    const info = await Professionals.findByPk(professionalId)
+    const info = await ClinicProfessionals.findByPk(professionalId)
     return info
   }
   async editProfessional(professionalId:number,dataProfessional:ProfessionalType){
-    await Professionals.update(dataProfessional,{where:{id:professionalId}})
+    await ClinicProfessionals.update(dataProfessional,{where:{id:professionalId}})
     return true
   }
   async deleteProfessional(professionalId:number){
-    await Professionals.destroy({where:{id:professionalId}})
+    await ClinicProfessionals.destroy({where:{id:professionalId}})
     return true
   }
     

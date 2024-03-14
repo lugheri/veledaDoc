@@ -7,7 +7,12 @@ import { LevelDTO } from '../../../Levels/Dto/levels.dto';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Fas from "@fortawesome/free-solid-svg-icons";
 
-export const EditCredential: React.FC<{editCredential:number|null,setEditCredential:React.Dispatch<React.SetStateAction<number|null>>}> = (props) => {
+type Props = {
+  account_id:number,
+  editCredential:number|null,
+  setEditCredential:React.Dispatch<React.SetStateAction<number|null>>
+}
+export const EditCredential = (props:Props) => {
   const [name,setName]=useState('')  
   const [levelId, setLevelId] = useState<string>('');
   const [description,setDescription]=useState('')
@@ -27,7 +32,7 @@ export const EditCredential: React.FC<{editCredential:number|null,setEditCredent
   const [ levels, setLevels] = useState<LevelDTO[]|null>(null)
   const getLevels = async () => {
     try{
-      const l = await api.get(`listLevels/1/1`)
+      const l = await api.get(`listLevels/${props.account_id}/1/1`)
       console.log('l',l)
       setLevels(l.data.response)
     }catch(e){
@@ -54,11 +59,14 @@ export const EditCredential: React.FC<{editCredential:number|null,setEditCredent
           <InputForm label="Nome" required placeholder='Nome do Cargo' value={name} onChange={setName}/>
         </div>
         <div className="flex flex-col w-full ">
-          {levels === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Níveis ...</p>
-           : <SelectForm dataOptions={levels} labelOption='name' valueOption='id'
-                label="Nível de Acesso" required 
-                 empty='Selecione um Nível de Acesso' 
-                value={levelId} onChange={setLevelId}/>}
+          { levels === null ? <p><FontAwesomeIcon className="text-blue-400" icon={Fas.faCircleNotch} pulse/> Carregando Níveis ...</p>
+          : <SelectForm 
+              dataOptions={levels} 
+              labelOption='name' 
+              valueOption='id'
+              label="Nível de Acesso" required 
+              empty='Selecione um Nível de Acesso' 
+              value={levelId} onChange={setLevelId}/>}
         </div>
         <div className="flex flex-col w-full ">
           <TextAreaForm label="Descrição" placeholder='Breve Descrição' value={description} onChange={setDescription}/>

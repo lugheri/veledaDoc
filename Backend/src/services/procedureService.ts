@@ -1,10 +1,10 @@
 import { ProcedureType } from "../controllers/Dtos/procedure.dto"
-import { Procedures } from "../models/ClinicProcedures"
+import { ClinicProcedures } from "../models/ClinicProcedures"
 
 
 class ProcedureService{
   async newProcedure(dataProcedure:ProcedureType){
-    const [ newProcedure,created ] = await Procedures.findOrCreate({
+    const [ newProcedure,created ] = await ClinicProcedures.findOrCreate({
       where:{
         name:dataProcedure.name,
         clinic_id:dataProcedure.clinic_id,
@@ -16,21 +16,21 @@ class ProcedureService{
     return newProcedure
   }
   async listProcedures(status:number){
-    const procedures = await Procedures.findAll({
+    const procedures = await ClinicProcedures.findAll({
       where:{status:status}
     })
     return procedures
   }
   async infoProcedure(procedureId:number){
-    const info = await Procedures.findByPk(procedureId)
+    const info = await ClinicProcedures.findByPk(procedureId)
     return info
   }
   async editProcedure(procedureId:number,dataProcedure:ProcedureType){
-    await Procedures.update(dataProcedure,{where:{id:procedureId}})
+    await ClinicProcedures.update(dataProcedure,{where:{id:procedureId}})
     return true
   }
   async deleteProcedure(procedureId:number){
-    await Procedures.destroy({where:{id:procedureId}})
+    await ClinicProcedures.destroy({where:{id:procedureId}})
     return true
   }
     

@@ -8,14 +8,11 @@ import path from 'path';
 
 const app = express();
 
-
 app.use(cors());
 app.use(express.json({limit:'250mb'}))
 app.use(express.static(path.join(__dirname,'../public')));
 app.use(express.urlencoded({extended:true, limit:'250mb'}));
-
 app.use(routes)
-
 
 const errorHandler: ErrorRequestHandler = (err,req,res,next) =>{
   res.status(400)
@@ -29,14 +26,8 @@ const errorHandler: ErrorRequestHandler = (err,req,res,next) =>{
 }
 app.use(errorHandler)
 
-
-
-
-
-
 const httpServer = http.createServer(app);
 const startUp = async() => {  
   httpServer.listen(4000,()=>console.log('😀 Your Backend is running on 4000!'));
 }
 startUp()
-

@@ -4,7 +4,7 @@ export type CredentialDTO = {
   name:string;
   description:string;
   status:number;
-  Level: {
+  SysLevel: {
     name: string;
   };
 };

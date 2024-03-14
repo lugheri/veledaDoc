@@ -4,7 +4,12 @@ import { InputForm, TextAreaForm } from "../../../../../../components/Inputs"
 import { TitleModal } from "../../../../../../components/Modal"
 import api from '../../../../../../services/api';
 
-export const EditLevel: React.FC<{editLevel:number|null,setEditLevel:React.Dispatch<React.SetStateAction<number|null>>}> = (props) => {
+type Props = {
+  account_id:number;
+  editLevel:number|null,
+  setEditLevel:React.Dispatch<React.SetStateAction<number|null>>
+}
+export const EditLevel = (props:Props) => {
   const [name,setName]=useState('')
   const [description,setDescription]=useState('')
 

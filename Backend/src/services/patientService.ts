@@ -1,11 +1,11 @@
 import { PatientInformationType, PatientPersonalDataType } from "../controllers/Dtos/patient.dto"
-import { PatientPersonalData } from "../models/ClinicPatientPersonalData"
-import { PatientInformation } from "../models/ClinicPatientsInformation"
+import { ClinicPatientPersonalData } from "../models/ClinicPatientPersonalData"
+import { ClinicPatientInformation } from "../models/ClinicPatientsInformation"
 const { Op } = require('sequelize');
 
 class PatientService{
   async newPatient(dataPatientInformation:PatientInformationType){
-    const [ newPatient,created ] = await PatientInformation.findOrCreate({
+    const [ newPatient,created ] = await ClinicPatientInformation.findOrCreate({
       where:{
         name:dataPatientInformation.name,
         clinic_id:dataPatientInformation.clinic_id,
@@ -17,7 +17,7 @@ class PatientService{
     return newPatient
   }
   async addPatientPersonalData(dataPatientPersonalData:PatientPersonalDataType){
-    const [ newPatientData,created ] = await PatientPersonalData.findOrCreate({
+    const [ newPatientData,created ] = await ClinicPatientPersonalData.findOrCreate({
       where:{patient_id:dataPatientPersonalData.patient_id},
       defaults:dataPatientPersonalData
     })
@@ -26,14 +26,14 @@ class PatientService{
   }  
 
   async listPatient(status:number){
-    const patients = await PatientInformation.findAll({
+    const patients = await ClinicPatientInformation.findAll({
       where:{status:status}
     })
     return patients
   }
 
   async searchPatients(params:string){
-    const patients = await PatientInformation.findAll({
+    const patients = await ClinicPatientInformation.findAll({
       where:{
         [Op.or]: [
           { name: { [Op.like]: `%${params}%` }},
@@ -46,28 +46,28 @@ class PatientService{
 
 
   async infoPatient(patientId:number){
-    const info = await PatientInformation.findByPk(patientId)
+    const info = await ClinicPatientInformation.findByPk(patientId)
     return info
   }
   async personalDataPatient(patientId:number){
-    const info = await PatientPersonalData.findOne({
+    const info = await ClinicPatientPersonalData.findOne({
       where:{patient_id:patientId}
     })
     return info
   }
 
   async editPatient(patientId:number,dataPatient:PatientInformationType){
-    await PatientInformation.update(dataPatient,{where:{id:patientId}})
+    await ClinicPatientInformation.update(dataPatient,{where:{id:patientId}})
     return true
   }
   async editPersonalDataPatient(patientId:number,dataPersonalData:PatientPersonalDataType){
-    await PatientPersonalData.update(dataPersonalData,{where:{patient_id:patientId}})
+    await ClinicPatientPersonalData.update(dataPersonalData,{where:{patient_id:patientId}})
     return true
   }
 
   async deletePatient(patientId:number){
-    await PatientInformation.destroy({where:{id:patientId}})
-    await PatientPersonalData.destroy({where:{patient_id:patientId}})
+    await ClinicPatientInformation.destroy({where:{id:patientId}})
+    await ClinicPatientPersonalData.destroy({where:{patient_id:patientId}})
     return true
   }
     

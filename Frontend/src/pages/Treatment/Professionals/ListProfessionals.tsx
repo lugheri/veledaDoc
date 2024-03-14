@@ -11,33 +11,32 @@ import { EditProfessional } from "./EditProfessional"
 import { SubTitle } from "../../../components/Subtitle"
 
 type ListProfessionalsProps = {
-  clientId:number,
+  clinicId:number,
   setAddProfessional:React.Dispatch<React.SetStateAction<boolean>>,
   addProfessional:boolean
 }
 export const ListProfessionals = (props:ListProfessionalsProps) => {
-  const [ update, setUpdate] = useState(0)
   const [ error, setError ] = useState<string|null>(null)
+  const [ update, setUpdate] = useState(0)
   const [ professionals, setProfessionals ] = useState<IProfessional[]|null>(null)
   const getListProfessionals = async () => {
     try{
       const status=1
-      const list = await api.get(`listProfessionals/${status}`)
+      const list = await api.get(`listProfessionals/${props.clinicId}/${status}`)
       if(list.data.error){
         setError(list.data.message)
         return
       }
       setProfessionals(list.data.response)
-    }catch(err){ 
+    }catch(err:any){ 
       console.log("erro",err)
-      setError("Ocorreu um erro na requisição dos dados!")
+      setError(`Ocorreu um erro na requisição dos dados! ${err.message}`)
     }
   }
   useEffect(()=>{getListProfessionals()},[update,props.addProfessional])
 
   return(
-    <div className="flex flex-col w-full bg-white rounded-md shadow mt-1 p-4">   
-      
+    <div className="flex flex-col  bg-white rounded-md shadow mx-2 mt-1 p-4">         
       { error !== null ? (
         <TextError icon="faExclamationTriangle" error={error}/>
       ) : professionals === null ? (
@@ -50,7 +49,7 @@ export const ListProfessionals = (props:ListProfessionalsProps) => {
           <ListItems professionals={professionals} setUpdate={setUpdate}/>
         </div>        
       )}
-      { props.addProfessional && ( <AddProfessional clientId={props.clientId} close={props.setAddProfessional}/> )}
+      { props.addProfessional && ( <AddProfessional clinicId={props.clinicId} close={props.setAddProfessional}/> )}
     </div>
   )
 }

@@ -4,9 +4,20 @@ import { sequelize } from '../instances/mysql';
 export interface ClinicProfessionalsInstance extends Model{
   id:number;
   clinic_id:number;
-  date:string;
+  hire_date:string;
+  termination_date:string;
   photo:number;
   name:string;
+  birth_date:string;
+  gender:string;
+  marital_status:string;
+  crm:string;
+  document_type:string;
+  document:string;
+  number_cell:string;
+  number_phone:string;
+  number_additional:string;
+  email:string;
   status:number;
 }
 
@@ -19,14 +30,50 @@ export const ClinicProfessionals = sequelize.define<ClinicProfessionalsInstance>
   clinic_id:{
     type:DataTypes.INTEGER
   },
-  date:{
+  hire_date:{
     type:DataTypes.DATE,
-    defaultValue:DataTypes.NOW
+    defaultValue:null
+  }, 
+  termination_date:{
+    type:DataTypes.DATE,
+    defaultValue:null
   }, 
   photo:{
-    type:DataTypes.INTEGER
+    type:DataTypes.INTEGER,
+    defaultValue:1
   },
   name:{
+    type:DataTypes.STRING
+  },
+  birth_date:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  gender:{
+    type:DataTypes.STRING
+  },
+  marital_status:{
+    type:DataTypes.STRING
+  },
+  crm:{
+    type:DataTypes.STRING
+  },
+  document_type:{
+    type:DataTypes.STRING
+  },
+  document:{
+    type:DataTypes.STRING
+  },
+  number_cell:{
+    type:DataTypes.STRING
+  },
+  number_phone:{
+    type:DataTypes.STRING
+  },
+  number_additional:{
+    type:DataTypes.STRING
+  },
+  email:{
     type:DataTypes.STRING
   },
   status:{

@@ -5,14 +5,13 @@ export type UserDTO = {
   username:string;
   mail:string;
   credential:number;
-  team_id:number;
   password:string;
   logged:number;
   reset:number;
   status:number;
   createdAt:string;
   updatedAt:string;
-  Credential: {
+  SysCredential: {
     "name": string
   }
 };
